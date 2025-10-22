@@ -29,22 +29,6 @@ mqtt:
   use_tls: true
 ```
 
-**Alternativ B: Använd .env fil**
-
-```bash
-cp .env.example .env
-nano .env
-```
-
-Lägg till:
-```env
-MQTT_BROKER=7dab69000883410aba47967fb078d6d9.s1.eu.hivemq.cloud
-MQTT_PORT=8883
-MQTT_USERNAME=ditt_hivemq_användarnamn
-MQTT_PASSWORD=ditt_hivemq_lösenord
-MQTT_USE_TLS=true
-```
-
 ### 2. Testa HiveMQ-anslutningen
 
 ```bash
@@ -140,7 +124,7 @@ Genio AI använder:
 ### Credentials
 
 **Bästa praxis:**
-1. ✅ Använd `.env` fil för credentials (läggs till `.gitignore`)
+1. ✅ Lagra credentials i `config/config.yaml` (läggs till `.gitignore`)
 2. ✅ Skapa unika användare för varje Genio AI-enhet
 3. ✅ Använd starka lösenord (minst 12 tecken)
 4. ❌ Commita ALDRIG credentials till Git
@@ -153,9 +137,6 @@ Genio AI använder:
 ```bash
 # Verifiera credentials i config
 cat config/config.yaml | grep -A 5 mqtt
-
-# Eller i .env
-cat .env | grep MQTT
 
 # Testa anslutningen
 python test_mqtt.py
