@@ -10,9 +10,11 @@ stt:
 
 tts:
   enabled: true
-  engine: "espeak"  # Suggested TTS engine
+  engine: "piper"  # Piper TTS engine
   language: "sv"  # Swedish language
-  voice: "default"
+  voice: "sv_SE-nst-medium"  # Swedish voice model
+  model_path: "models/sv_SE-nst-medium.onnx"  # Path to Piper model
+  config_path: "models/sv_SE-nst-medium.onnx.json"  # Path to model config
 
 mqtt:
   broker: "mqtt://your_mqtt_broker"

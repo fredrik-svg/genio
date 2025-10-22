@@ -3,6 +3,5 @@ faster-whisper
 paho-mqtt
 sounddevice
 numpy
-gTTS
-playsound
+piper-tts
 PyYAML

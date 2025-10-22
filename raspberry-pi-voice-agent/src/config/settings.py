@@ -1,22 +1,40 @@
 # Configuration settings for the voice agent application
+import yaml
+from pathlib import Path
+
+# Load configuration from YAML file
+config_file = Path(__file__).parent.parent.parent / 'config' / 'config.yaml'
+with open(config_file, 'r') as f:
+    config = yaml.safe_load(f)
 
 # Wake word detection settings
-WAKE_WORD = "hej dator"  # The wake word to listen for
-WAKE_WORD_MODEL_PATH = "path/to/porcupine/model.pv"  # Path to the Porcupine model file
+WAKE_WORD = config.get('wakeword_detection', {}).get('keyword', 'hej')
+WAKE_WORD_MODEL_PATH = config.get('wakeword_detection', {}).get('model_path', 'path/to/porcupine/model.pv')
 
 # Speech-to-Text settings
-STT_MODEL_PATH = "path/to/faster_whisper/model"  # Path to the Faster Whisper model
-STT_LANGUAGE = "sv"  # Language for STT (Swedish)
+STT_MODEL_PATH = config.get('stt', {}).get('model_path', 'path/to/faster_whisper/model')
+STT_LANGUAGE = config.get('stt', {}).get('language', 'sv')
+STT_MODEL = STT_MODEL_PATH  # Alias for backward compatibility
 
 # Text-to-Speech settings
-TTS_ENGINE = "pyttsx3"  # Suggested TTS engine (e.g., pyttsx3)
-TTS_LANGUAGE = "sv"  # Language for TTS (Swedish)
+TTS_ENGINE = config.get('tts', {}).get('engine', 'piper')
+TTS_LANGUAGE = config.get('tts', {}).get('language', 'sv')
+TTS_VOICE = config.get('tts', {}).get('voice', 'sv_SE-nst-medium')
+TTS_MODEL_PATH = config.get('tts', {}).get('model_path', 'models/sv_SE-nst-medium.onnx')
+TTS_CONFIG_PATH = config.get('tts', {}).get('config_path', 'models/sv_SE-nst-medium.onnx.json')
+TTS_MODEL = TTS_MODEL_PATH  # Alias for backward compatibility
 
 # MQTT settings
-MQTT_BROKER = "mqtt.example.com"  # MQTT broker address
-MQTT_PORT = 1883  # MQTT broker port
-MQTT_TOPIC = "voice/agent"  # Topic for communication
-MQTT_CLIENT_ID = "raspberry_pi_voice_agent"  # Unique client ID for MQTT connection
+MQTT_BROKER = config.get('mqtt', {}).get('broker', 'mqtt.example.com')
+MQTT_PORT = config.get('mqtt', {}).get('port', 1883)
+MQTT_TOPIC = config.get('mqtt', {}).get('topic', 'voice/agent')
+MQTT_CLIENT_ID = config.get('mqtt', {}).get('client_id', 'raspberry_pi_voice_agent')
+MQTT_USERNAME = config.get('mqtt', {}).get('username', '')
+MQTT_PASSWORD = config.get('mqtt', {}).get('password', '')
+
+# Logging settings
+LOG_LEVEL = config.get('logging', {}).get('level', 'INFO')
+LOG_FILE = config.get('logging', {}).get('file', 'logs/voice_agent.log')
 
 # Configuration parameters
 CONFIG_PARAMS = {

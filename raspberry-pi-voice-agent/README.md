@@ -6,7 +6,7 @@ This project implements a voice agent running on a Raspberry Pi 5, designed to i
 ## Features
 - **Wake Word Detection**: Utilizes Porcupine for detecting a specific wake word.
 - **Speech-to-Text**: Integrates Faster Whisper for converting spoken language into text.
-- **Text-to-Speech**: Provides functionality to convert text responses into speech.
+- **Text-to-Speech**: Uses Piper TTS for high-quality, local neural text-to-speech synthesis.
 - **MQTT Communication**: Communicates with an n8n workflow via MQTT protocol.
 - **Swedish Language Support**: The application is configured to operate in Swedish.
 
@@ -53,14 +53,35 @@ raspberry-pi-voice-agent
    cd raspberry-pi-voice-agent
    ```
 
-2. Install the required dependencies:
+2. Install Piper TTS:
+   ```bash
+   # Install Piper on Raspberry Pi
+   wget https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_arm64.tar.gz
+   tar -xzf piper_arm64.tar.gz
+   sudo mv piper/piper /usr/local/bin/
+   sudo chmod +x /usr/local/bin/piper
+   ```
+
+3. Download Swedish voice model for Piper:
+   ```bash
+   # Create models directory
+   mkdir -p models
+   
+   # Download Swedish voice model
+   cd models
+   wget https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/sv/sv_SE/nst/medium/sv_SE-nst-medium.onnx
+   wget https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/sv/sv_SE/nst/medium/sv_SE-nst-medium.onnx.json
+   cd ..
+   ```
+
+4. Install Python dependencies:
    ```
    pip install -r requirements.txt
    ```
 
-3. Configure the application by editing `config/config.yaml` to set your desired parameters.
+5. Configure the application by editing `config/config.yaml` to set your desired parameters.
 
-4. Run the application:
+6. Run the application:
    ```
    python src/main.py
    ```
