@@ -19,12 +19,13 @@ tts:
   config_path: "models/sv_SE-nst-medium.onnx.json"  # Path to model config
 
 mqtt:
-  broker: "mqtt://your_mqtt_broker"
+  broker: "7dab69000883410aba47967fb078d6d9.s1.eu.hivemq.cloud"  # HiveMQ Cloud broker
   port: 8883
   topic: "genio/agent"
   client_id: "genio_ai"
-  username: "your_username"
-  password: "your_password"
+  username: ""  # Din HiveMQ username
+  password: ""  # Din HiveMQ password
+  use_tls: true  # HiveMQ kräver TLS/SSL
 
 logging:
   level: "INFO"

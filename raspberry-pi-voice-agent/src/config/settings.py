@@ -49,6 +49,7 @@ MQTT_TOPIC = os.getenv('MQTT_TOPIC') or config.get('mqtt', {}).get('topic', 'gen
 MQTT_CLIENT_ID = config.get('mqtt', {}).get('client_id', 'genio_ai')
 MQTT_USERNAME = os.getenv('MQTT_USERNAME') or config.get('mqtt', {}).get('username', '')
 MQTT_PASSWORD = os.getenv('MQTT_PASSWORD') or config.get('mqtt', {}).get('password', '')
+MQTT_USE_TLS = os.getenv('MQTT_USE_TLS', 'true').lower() == 'true' if os.getenv('MQTT_USE_TLS') else config.get('mqtt', {}).get('use_tls', True)
 
 # Logging settings
 LOG_LEVEL = os.getenv('LOG_LEVEL') or config.get('logging', {}).get('level', 'INFO')

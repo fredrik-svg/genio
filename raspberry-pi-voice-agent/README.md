@@ -6,11 +6,12 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](ht## Documentation
 
 - 📖 **[CONFIG_GUIDE.md](CONFIG_GUIDE.md)** - Guide för konfiguration (.env vs config.yaml)
-- 🚀 **[QUICKREF.md](QUICKREF.md)** - Snabbreferens för daglig användning
+- 🚀 **[QUICKSTART.md](QUICKSTART.md)** - Snabbstart och testning
 - 🔧 **[INSTALLATION.md](INSTALLATION.md)** - Detaljerad installationsguide med lösningar för vanliga problem
 - 🎤 **[WAKEWORD_SETUP.md](WAKEWORD_SETUP.md)** - Guide för Porcupine wake word setup
 - 🎙️ **[STT_SETUP.md](STT_SETUP.md)** - Guide för Faster Whisper speech-to-text setup
 - 🔊 **[PIPER_INSTALLATION.md](PIPER_INSTALLATION.md)** - Guide för Piper TTS-installation
+- ☁️ **[HIVEMQ_SETUP.md](HIVEMQ_SETUP.md)** - HiveMQ Cloud MQTT konfiguration och testning
 - 🆘 **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Felsökning och lösningar
 - 🎨 **[REBRANDING.md](REBRANDING.md)** - Information om Genio AI-namnbytet
 - 📝 **[CHANGELOG_PIPER.md](CHANGELOG_PIPER.md)** - Versionshistorik och ändringarpython.org/downloads/)
@@ -209,12 +210,12 @@ pip install -r requirements.txt
 ```
 
 ### MQTT Connection Issues
-- Verify MQTT broker is running
-- Check port 8883 is open
-- Confirm username/password in `config/config.yaml`
-- Test connection: `mosquitto_pub -h broker -p 8883 -t test -m "hello"`
+- **HiveMQ Cloud:** Verify credentials in `config/config.yaml`
+- Check port 8883 is open and TLS is enabled
+- Test connection: `python test_mqtt.py`
+- See [HIVEMQ_SETUP.md](HIVEMQ_SETUP.md) for detailed HiveMQ configuration
 
-See [INSTALLATION.md](INSTALLATION.md) for more troubleshooting help.
+See [TROUBLESHOOTING.md](TROUBLESHOOTING.md) for more troubleshooting help.
 
 ## Contributing
 Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.

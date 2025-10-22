@@ -200,7 +200,47 @@ python src/main.py
 
 ## Vanliga Problem och Lösningar
 
-### Problem 1: PyAudio installation error
+### Problem 6: MQTT Connection Error - "Name or service not known"
+
+**Symptom:**
+```
+socket.gaierror: [Errno -2] Name or service not known
+```
+
+**Orsak:**
+MQTT broker-adressen är inte konfigurerad eller ogiltig.
+
+**Lösning A: Kör utan MQTT (testläge)**
+```yaml
+# I config/config.yaml:
+mqtt:
+  broker: ""  # Lämna tom för att köra utan MQTT
+```
+
+Genio AI kommer att:
+- ✅ Fungera fullt ut lokalt
+- ✅ Detektera wake word
+- ✅ Transkribera tal
+- ✅ Spela upp svar
+- ⚠️ Inte ansluta till n8n (MQTT avstängt)
+
+**Lösning B: Konfigurera MQTT korrekt**
+```yaml
+mqtt:
+  broker: "192.168.1.100"  # Eller "mqtt.example.com"
+  port: 8883
+  username: "user"
+  password: "pass"
+```
+
+Testa anslutningen:
+```bash
+ping mqtt.example.com
+# eller
+mosquitto_pub -h mqtt.example.com -p 8883 -t test -m "hello"
+```
+
+### Problem 7: PyAudio installation error
 
 **Symptom:**
 ```
@@ -215,7 +255,7 @@ source genio-env/bin/activate
 pip install pyaudio
 ```
 
-### Problem 2: "Invalid Porcupine Access Key"
+### Problem 8: "Invalid Porcupine Access Key"
 
 **Symptom:**
 ```
@@ -227,7 +267,7 @@ pvporcupine.PorcupineInvalidArgumentError: Invalid access key
 2. Kontrollera att .env filen laddas: `cat .env | grep PORCUPINE`
 3. Testa direkt: `python -c "import os; from dotenv import load_dotenv; load_dotenv(); print(os.getenv('PORCUPINE_ACCESS_KEY'))"`
 
-### Problem 3: "No module named 'dotenv'"
+### Problem 9: "No module named 'dotenv'"
 
 **Symptom:**
 ```
@@ -240,7 +280,7 @@ source genio-env/bin/activate
 pip install python-dotenv
 ```
 
-### Problem 4: ALSA errors eller ingen ljud
+### Problem 10: ALSA errors eller ingen ljud
 
 **Symptom:**
 ```
