@@ -5,7 +5,7 @@
 
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](ht## Documentation
 
-- 📖 **[CONFIG_GUIDE.md](CONFIG_GUIDE.md)** - Guide för konfiguration (.env vs config.yaml)
+- 📖 **[CONFIG_GUIDE.md](CONFIG_GUIDE.md)** - Guide för konfiguration med config.yaml
 - 🚀 **[QUICKSTART.md](QUICKSTART.md)** - Snabbstart och testning
 - 🔧 **[INSTALLATION.md](INSTALLATION.md)** - Detaljerad installationsguide med lösningar för vanliga problem
 - 🎤 **[WAKEWORD_SETUP.md](WAKEWORD_SETUP.md)** - Guide för Porcupine wake word setup
@@ -134,14 +134,14 @@ Om du får felet `error: externally-managed-environment`:
    pip install -r requirements.txt
    ```
 
-4. **Konfigurera applikationen** - Välj EN av dessa metoder:
+4. **Konfigurera applikationen:**
 
-   **Metod A: Endast config.yaml (Enklast, rekommenderat)**
+   Redigera config.yaml och ändra placeholder-värdena till dina riktiga värden:
    ```bash
    nano config/config.yaml
    ```
    
-   Ändra dessa placeholder-värden till dina riktiga värden:
+   Ändra dessa värden:
    ```yaml
    wakeword_detection:
      access_key: "din_porcupine_key"  # Ändra från YOUR_PORCUPINE_ACCESS_KEY_HERE
@@ -154,24 +154,7 @@ Om du får felet `error: externally-managed-environment`:
      password: "ditt_lösenord"        # Ändra från YOUR_MQTT_PASSWORD
    ```
 
-   **Metod B: .env + config.yaml (Valfritt, mer flexibelt)**
-   
-   ⚠️ OBS: .env är VALFRITT och behövs bara om du vill separera känsliga värden
-   
-   ```bash
-   cp .env.example .env
-   nano .env
-   ```
-   
-   Lägg till i .env:
-   ```env
-   PORCUPINE_ACCESS_KEY=din_key
-   MQTT_BROKER=din-broker.com
-   MQTT_USERNAME=ditt_user
-   MQTT_PASSWORD=ditt_pass
-   ```
-
-   Se [CONFIG_GUIDE.md](CONFIG_GUIDE.md) för mer detaljer om varför .env.example finns och när du behöver använda den.
+   Se [CONFIG_GUIDE.md](CONFIG_GUIDE.md) för mer information om konfiguration.
 
 5. Test wake word detection:
    ```bash
@@ -195,7 +178,7 @@ Once Genio AI is running, it will listen for the specified wake word. Upon detec
 
 ## Documentation
 
-- 📖 **[CONFIG_GUIDE.md](CONFIG_GUIDE.md)** - Guide för konfiguration (.env vs config.yaml)
+- 📖 **[CONFIG_GUIDE.md](CONFIG_GUIDE.md)** - Guide för konfiguration med config.yaml
 - 🚀 **[QUICKREF.md](QUICKREF.md)** - Snabbreferens för daglig användning
 - 🔧 **[INSTALLATION.md](INSTALLATION.md)** - Detaljerad installationsguide med lösningar för vanliga problem
 - 🎤 **[WAKEWORD_SETUP.md](WAKEWORD_SETUP.md)** - Guide för Porcupine wake word setup

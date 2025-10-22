@@ -9,8 +9,8 @@ git clone https://github.com/fredrik-svg/genio.git && cd genio/raspberry-pi-voic
 **Efter installation:**
 ```bash
 # 1. Skaffa Porcupine Access Key från https://console.picovoice.ai/
-# 2. Redigera .env och lägg till din key
-nano .env
+# 2. Redigera config.yaml och lägg till din key
+nano config/config.yaml
 
 # 3. Testa wake word
 source genio-env/bin/activate

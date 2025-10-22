@@ -69,10 +69,10 @@ python test_mqtt.py
 🎉 All tests passed!
 ```
 
-### 5. `.env.example` ✅
+### 5. Konfigurationsfiler uppdaterade ✅
 **Uppdaterat:**
-- HiveMQ Cloud broker-adress
-- Lagt till `MQTT_USE_TLS=true`
+- HiveMQ Cloud broker-adress i config.yaml
+- Lagt till `use_tls: true`
 - Förtydligade kommentarer
 
 ### 6. `HIVEMQ_SETUP.md` ✅ (Nytt)
@@ -125,16 +125,6 @@ mqtt:
   username: "ditt_hivemq_användarnamn"
   password: "ditt_hivemq_lösenord"
   use_tls: true
-```
-
-**Eller .env:**
-```env
-PORCUPINE_ACCESS_KEY=DIN_KEY
-MQTT_BROKER=7dab69000883410aba47967fb078d6d9.s1.eu.hivemq.cloud
-MQTT_PORT=8883
-MQTT_USERNAME=ditt_hivemq_användarnamn
-MQTT_PASSWORD=ditt_hivemq_lösenord
-MQTT_USE_TLS=true
 ```
 
 ## Testing
@@ -224,7 +214,7 @@ pip install --upgrade certifi
 ## Säkerhet
 
 ### Best Practices
-1. ✅ Använd `.env` för credentials (ej i Git)
+1. ✅ Lagra credentials i config.yaml (ej i Git)
 2. ✅ Starka lösenord (12+ tecken)
 3. ✅ TLS/SSL alltid aktiverat
 4. ✅ Unika användare per enhet
@@ -248,7 +238,6 @@ client.tls_set(
 📖 **Uppdaterade:**
 - README.md - HiveMQ-referenser
 - config.yaml - HiveMQ-konfiguration
-- .env.example - HiveMQ-exempel
 
 ## Status
 
