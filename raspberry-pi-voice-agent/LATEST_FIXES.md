@@ -81,8 +81,7 @@ När access key saknas:
 
 ### CONFIG_GUIDE.md
 Komplett guide om:
-- Val mellan .env och config.yaml
-- Prioritetsordning
+- Konfiguration med config.yaml
 - Minimikonfiguration
 - Scenarion (utveckling vs produktion)
 - Snabbstart
@@ -94,7 +93,6 @@ Komplett guide om:
 
 ### Uppdaterade TROUBLESHOOTING.md
 - Lösning för ImportError
-- Förklaring om .env vs config.yaml
 - Snabba fixar
 
 ---

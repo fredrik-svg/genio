@@ -107,7 +107,6 @@ sounddevice
 numpy
 piper-tts
 PyYAML
-python-dotenv
 ```
 
 ## Fullständig Installation
@@ -281,20 +280,7 @@ pvporcupine.PorcupineInvalidArgumentError: Invalid access key
 2. Kontrollera att config.yaml är korrekt: `cat config/config.yaml | grep access_key`
 3. Testa direkt: `python -c "from src.config.settings import PORCUPINE_ACCESS_KEY; print(PORCUPINE_ACCESS_KEY)"`
 
-### Problem 9: "No module named 'dotenv'"
-
-**Symptom:**
-```
-ModuleNotFoundError: No module named 'dotenv'
-```
-
-**Lösning:**
-```bash
-source genio-env/bin/activate
-pip install python-dotenv
-```
-
-### Problem 10: ALSA errors eller ingen ljud
+### Problem 9: ALSA errors eller ingen ljud
 
 **Symptom:**
 ```

@@ -43,20 +43,16 @@ Porcupine har flera inbyggda wake words. För svenska rekommenderas:
 ### Custom wake word (kräver Picovoice konto):
 Du kan träna egna wake words (t.ex. "Hej Genio") via Picovoice Console.
 
-## Steg 4: Uppdatera settings.py
+## Steg 4: Testa wake word detection
 
-Vi behöver uppdatera `src/config/settings.py` för att läsa access key:
+Använd testfilen som finns i projektet:
 
-```python
-import os
-from dotenv import load_dotenv
-
-# Ladda miljövariabler
-load_dotenv()
-
-# Porcupine settings
-PORCUPINE_ACCESS_KEY = os.getenv('PORCUPINE_ACCESS_KEY') or config.get('wakeword_detection', {}).get('access_key', '')
+```bash
+source genio-env/bin/activate
+python test_wakeword.py
 ```
+
+Säg "porcupine" när den lyssnar.
 
 ## Alternativ: Använd Snowboy (Offline, Gratis)
 
