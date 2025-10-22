@@ -40,57 +40,39 @@ def main():
     try:
         print(f"\n🔧 Initialiserar Porcupine med wake word: '{wake_word}'")
         
-        porcupine = pvporcupine.create(
+        # Import the PorcupineDetector class
+        import sys
+        from pathlib import Path
+        sys.path.insert(0, str(Path(__file__).parent / 'src'))
+        from wakeword.porcupine_detector import PorcupineDetector
+        
+        # Create detector instance
+        detector = PorcupineDetector(
             access_key=access_key,
             keywords=[wake_word]
         )
         
-        print(f"✅ Porcupine initialiserad!")
-        print(f"   Sample Rate: {porcupine.sample_rate} Hz")
-        print(f"   Frame Length: {porcupine.frame_length}")
-        
-        # Initiera PyAudio
-        pa = pyaudio.PyAudio()
-        
-        # Hitta mikrofon
-        print(f"\n🎤 Tillgängliga ljudenheter:")
-        for i in range(pa.get_device_count()):
-            info = pa.get_device_info_by_index(i)
-            if info['maxInputChannels'] > 0:
-                print(f"   [{i}] {info['name']}")
-        
-        # Öppna ljudström
-        audio_stream = pa.open(
-            rate=porcupine.sample_rate,
-            channels=1,
-            format=pyaudio.paInt16,
-            input=True,
-            frames_per_buffer=porcupine.frame_length
-        )
+        # Initialize detector
+        detector.initialize()
         
         print(f"\n👂 Lyssnar efter wake word '{wake_word}'...")
         print(f"💡 Tips: Säg '{wake_word}' tydligt!")
         print("🛑 Tryck Ctrl+C för att avsluta\n")
         
         try:
-            while True:
-                pcm = audio_stream.read(porcupine.frame_length, exception_on_overflow=False)
-                pcm = struct.unpack_from("h" * porcupine.frame_length, pcm)
-                keyword_index = porcupine.process(pcm)
-                
-                if keyword_index >= 0:
+            detected = False
+            while not detected:
+                if detector.detect():
                     print(f"\n🎉 Wake word '{wake_word}' detekterat!")
                     print("✅ Test godkänt!\n")
-                    break
+                    detected = True
                     
         except KeyboardInterrupt:
             print("\n\n🛑 Test avbrutet av användaren")
             
         finally:
             # Städa upp
-            audio_stream.close()
-            pa.terminate()
-            porcupine.delete()
+            detector.cleanup()
             print("👋 Avslutar...")
             
     except Exception as e:

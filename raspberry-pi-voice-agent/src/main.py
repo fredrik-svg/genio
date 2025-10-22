@@ -1,7 +1,8 @@
 import paho.mqtt.client as mqtt
 from config.settings import (
     MQTT_BROKER, MQTT_PORT, MQTT_USERNAME, MQTT_PASSWORD,
-    WAKE_WORD, STT_MODEL_PATH, TTS_MODEL_PATH, TTS_CONFIG_PATH, TTS_LANGUAGE
+    PORCUPINE_ACCESS_KEY, WAKE_WORD, WAKE_WORD_MODEL_PATH, WAKE_WORD_SENSITIVITY,
+    STT_MODEL_PATH, TTS_MODEL_PATH, TTS_CONFIG_PATH, TTS_LANGUAGE
 )
 from audio.microphone import Microphone
 from audio.speaker import Speaker
@@ -13,10 +14,21 @@ from utils.logger import Logger
 class GenioAI:
     def __init__(self):
         self.logger = Logger()
+        self.logger.info("🤖 Initializing Genio AI...")
+        
+        # Validate Porcupine access key
+        if not PORCUPINE_ACCESS_KEY:
+            raise ValueError(
+                "PORCUPINE_ACCESS_KEY is required! "
+                "Add it to config/config.yaml or .env file. "
+                "Get free key from: https://console.picovoice.ai/"
+            )
+        
         self.mqtt_client = mqtt.Client()
         self.microphone = Microphone()
         
         # Initialize Piper TTS
+        self.logger.info("Initializing Piper TTS...")
         self.tts = PiperTTS(
             model_path=TTS_MODEL_PATH,
             config_path=TTS_CONFIG_PATH,
@@ -24,10 +36,29 @@ class GenioAI:
         )
         self.speaker = Speaker(self.tts)
         
-        self.porcupine_detector = PorcupineDetector(WAKE_WORD)
+        # Initialize Porcupine wake word detector
+        self.logger.info(f"Initializing wake word detector for '{WAKE_WORD}'...")
+        if WAKE_WORD_MODEL_PATH:
+            # Use custom .ppn file
+            self.porcupine_detector = PorcupineDetector(
+                access_key=PORCUPINE_ACCESS_KEY,
+                keyword_paths=[WAKE_WORD_MODEL_PATH],
+                sensitivity=WAKE_WORD_SENSITIVITY
+            )
+        else:
+            # Use built-in keyword
+            self.porcupine_detector = PorcupineDetector(
+                access_key=PORCUPINE_ACCESS_KEY,
+                keywords=[WAKE_WORD],
+                sensitivity=WAKE_WORD_SENSITIVITY
+            )
+        
+        # Initialize STT
+        self.logger.info("Initializing speech-to-text...")
         self.stt = FasterWhisper(STT_MODEL_PATH)
 
         self.setup_mqtt()
+        self.logger.info("✅ Genio AI initialized successfully!")
 
     def setup_mqtt(self):
         self.mqtt_client.on_connect = self.on_connect
