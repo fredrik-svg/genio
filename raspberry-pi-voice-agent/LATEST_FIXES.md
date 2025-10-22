@@ -23,15 +23,14 @@ FasterWhisper = FasterWhisperSTT
 
 ---
 
-### 2. Förvirring om .env vs config.yaml ✅
+### 2. Konfiguration förtydligad ✅
 
 **Fråga:**
-"Behövs både config.yaml och .env?"
+"Hur konfigurerar jag Genio AI?"
 
 **Svar:**
-**NEJ!** Du kan välja EN av dessa:
+Använd `config.yaml`:
 
-#### Metod 1: Endast config.yaml (Rekommenderat)
 ```yaml
 # config/config.yaml
 wakeword_detection:
@@ -48,21 +47,6 @@ mqtt:
 - ✅ Enkelt att säkerhetskopiera
 - ✅ Inga extra beroenden
 
-#### Metod 2: .env + config.yaml (Valfritt)
-```.env
-PORCUPINE_ACCESS_KEY=din_key
-MQTT_USERNAME=user
-MQTT_PASSWORD=pass
-```
-
-**Fördelar:**
-- ✅ Känslig data separerad
-- ✅ .env kan git-ignoreras
-- ✅ Bra för team-miljöer
-
-**Prioritet:**
-.env-värden har företräde över config.yaml
-
 **Dokumentation:**
 Se [CONFIG_GUIDE.md](CONFIG_GUIDE.md)
 
@@ -77,7 +61,7 @@ Se [CONFIG_GUIDE.md](CONFIG_GUIDE.md)
 1. **Lagt till i config.yaml:**
 ```yaml
 wakeword_detection:
-  access_key: ""  # Lägg till här (eller i .env)
+  access_key: ""  # Lägg till här
   keyword: "porcupine"
 ```
 
@@ -85,12 +69,9 @@ wakeword_detection:
 När access key saknas:
 ```
 ⚠️  VARNING: PORCUPINE_ACCESS_KEY är inte konfigurerad!
-   Lägg till i .env eller config.yaml
+   Lägg till i config.yaml
    Skaffa gratis key: https://console.picovoice.ai/
 ```
-
-3. **.env är nu valfri:**
-Om .env inte finns, används config.yaml utan fel.
 
 **Status:** ✅ Förbättrat
 
@@ -127,16 +108,9 @@ cd genio/raspberry-pi-voice-agent
 chmod +x install.sh
 ./install.sh
 
-# 2. Konfigurera (välj EN metod)
-
-## Metod A: Endast config.yaml (ENKLAST)
+# 2. Konfigurera config.yaml
 nano config/config.yaml
 # Fyll i access_key, mqtt-inställningar
-
-## Metod B: .env + config.yaml
-cp .env.example .env
-nano .env
-# Fyll i PORCUPINE_ACCESS_KEY och andra känsliga värden
 
 # 3. Skaffa Porcupine Access Key
 # Gå till: https://console.picovoice.ai/
@@ -157,7 +131,7 @@ python src/main.py
 
 ### Kodfixar:
 - ✅ `src/stt/faster_whisper.py` - Lagt till FasterWhisper alias
-- ✅ `src/config/settings.py` - .env är valfri, bättre felmeddelanden
+- ✅ `src/config/settings.py` - Bättre felmeddelanden
 - ✅ `config/config.yaml` - Lagt till access_key fält
 
 ### Nya/uppdaterade guider:
@@ -173,7 +147,7 @@ python src/main.py
 - [ ] Klonat repository
 - [ ] Kört `./install.sh`
 - [ ] Skaffat Porcupine Access Key från https://console.picovoice.ai/
-- [ ] Konfigurerat (config.yaml ELLER .env)
+- [ ] Konfigurerat config.yaml
 - [ ] Testat wake word: `python test_wakeword.py`
 - [ ] Testat TTS: `python test_piper.py`
 - [ ] Konfigurerat MQTT-broker-inställningar
@@ -190,7 +164,7 @@ python src/main.py
 
 **Vanligaste felen:**
 1. ❌ Glömt aktivera virtuell miljö → `source genio-env/bin/activate`
-2. ❌ Ingen Porcupine key → Lägg till i config.yaml eller .env
+2. ❌ Ingen Porcupine key → Lägg till i config.yaml
 3. ❌ MQTT-anslutning misslyckas → Kontrollera broker, port, credentials
 
 ---

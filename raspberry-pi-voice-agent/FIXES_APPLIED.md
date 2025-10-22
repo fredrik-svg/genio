@@ -93,10 +93,11 @@ stt:
 - Updated imports to use `STT_MODEL_SIZE`
 - Changed `FasterWhisper` initialization to use `model_size` parameter
 
-#### 4. `.env.example` ✅
-**Changed:**
-- `STT_MODEL_PATH` → `STT_MODEL_SIZE`
-- Added helpful comments about model sizes
+#### 4. Updated Documentation ✅
+Created comprehensive guides:
+- STT_SETUP.md
+- FIX_LANGUAGE_PARAMETER.md
+- TROUBLESHOOTING.md updates
 
 #### 5. `STT_SETUP.md` ✅
 Created comprehensive guide with:
@@ -155,18 +156,9 @@ mqtt:
   password: "pass"
 ```
 
-### Alternative: .env Configuration
+### Alternative Configuration
 
-```bash
-PORCUPINE_ACCESS_KEY=your_key_here
-WAKE_WORD=porcupine
-STT_MODEL_SIZE=base
-STT_LANGUAGE=sv
-MQTT_BROKER=mqtt://your-broker.com
-MQTT_PORT=8883
-MQTT_USERNAME=user
-MQTT_PASSWORD=pass
-```
+See [CONFIG_GUIDE.md](CONFIG_GUIDE.md) for advanced configuration options.
 
 ---
 

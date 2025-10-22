@@ -19,8 +19,6 @@ Faster Whisper uses pre-trained models in different sizes. Choose based on your 
 
 ## Configuration
 
-### Method 1: config.yaml (Recommended)
-
 Edit `config/config.yaml`:
 
 ```yaml
@@ -28,15 +26,6 @@ stt:
   enabled: true
   model_size: "base"  # tiny, base, small, medium, large
   language: "sv"      # sv for Swedish, en for English, etc.
-```
-
-### Method 2: .env File
-
-Edit `.env`:
-
-```env
-STT_MODEL_SIZE=base
-STT_LANGUAGE=sv
 ```
 
 ## First Run - Model Download

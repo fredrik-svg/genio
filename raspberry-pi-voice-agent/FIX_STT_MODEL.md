@@ -45,12 +45,6 @@ STT_LANGUAGE = os.getenv('STT_LANGUAGE') or config.get('stt', {}).get('language'
 self.stt = FasterWhisper(model_size=STT_MODEL_SIZE, language=STT_LANGUAGE)
 ```
 
-### 4. .env.example
-```env
-STT_MODEL_SIZE=base  # Inte model_path!
-STT_LANGUAGE=sv
-```
-
 ## Så Här Kör Du Nu
 
 ```bash

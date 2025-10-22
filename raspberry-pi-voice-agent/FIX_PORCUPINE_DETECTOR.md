@@ -92,12 +92,7 @@ wakeword_detection:
   model_path: ""                    # Tom om du använder inbyggt keyword
 ```
 
-**ELLER i .env:**
-```env
-PORCUPINE_ACCESS_KEY=din_key
-WAKE_WORD=porcupine
-WAKE_WORD_SENSITIVITY=0.5
-```
+
 
 ### 2. Testa wake word
 ```bash
@@ -213,7 +208,6 @@ python src/main.py
 
 ### Bakåtkompatibilitet:
 - ✅ Gamla konfigurationsfiler fungerar fortfarande
-- ✅ Både .env och config.yaml stöds
 - ✅ Standardvärden för alla inställningar
 
 ---
