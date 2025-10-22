@@ -96,15 +96,28 @@ def test_mqtt_connection():
     print(f"   Topic: {MQTT_TOPIC}")
     
     # Validate configuration
-    if not MQTT_BROKER or MQTT_BROKER == "mqtt.example.com":
+    if not MQTT_BROKER or MQTT_BROKER in ["mqtt.example.com", "YOUR_MQTT_BROKER_ADDRESS"]:
         print("\n❌ ERROR: MQTT broker not configured!")
-        print("   Update config/config.yaml with your HiveMQ broker address")
+        print("   MQTT_BROKER har standardvärdet eller är inte konfigurerad")
+        print("\n   📝 Så här fixar du:")
+        print("   1. Öppna: config/config.yaml")
+        print("   2. Ändra 'broker:' från 'YOUR_MQTT_BROKER_ADDRESS' till din riktiga broker")
+        print("      Exempel för HiveMQ: xxx.s1.eu.hivemq.cloud")
+        print("      Exempel för lokal: localhost")
+        print("\n   Eller använd .env:")
+        print("   1. Kopiera: cp .env.example .env")
+        print("   2. Ändra MQTT_BROKER i .env till din riktiga broker")
         return False
     
-    if not MQTT_USERNAME or not MQTT_PASSWORD:
-        print("\n⚠️  WARNING: MQTT credentials not configured!")
-        print("   HiveMQ Cloud requires username and password")
-        print("   Update config/config.yaml or .env file")
+    if not MQTT_USERNAME or not MQTT_PASSWORD or MQTT_USERNAME == "YOUR_MQTT_USERNAME" or MQTT_PASSWORD == "YOUR_MQTT_PASSWORD":
+        print("\n❌ ERROR: MQTT credentials not configured!")
+        print("   MQTT username/password har standardvärden eller är tomma")
+        print("\n   📝 Så här fixar du:")
+        print("   1. Öppna: config/config.yaml")
+        print("   2. Ändra 'username:' och 'password:' till dina riktiga credentials")
+        print("\n   Eller använd .env:")
+        print("   1. Kopiera: cp .env.example .env")
+        print("   2. Ändra MQTT_USERNAME och MQTT_PASSWORD i .env")
         return False
     
     print("\n🔄 Initializing MQTT client...")

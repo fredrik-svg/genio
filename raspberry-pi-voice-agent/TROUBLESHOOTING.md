@@ -205,12 +205,39 @@ python src/main.py
 **Symptom:**
 ```
 socket.gaierror: [Errno -2] Name or service not known
+Connection error: [Errno -2] Name or service not known
+Connecting to mqtt://YOUR_MQTT_BROKER_ADDRESS:8883...
 ```
 
 **Orsak:**
-MQTT broker-adressen är inte konfigurerad eller ogiltig.
+MQTT broker-adressen är inte konfigurerad, har placeholder-värde, eller är ogiltig.
 
-**Lösning A: Kör utan MQTT (testläge)**
+**Lösning A: Konfigurera MQTT korrekt (Rekommenderat)**
+
+1. Öppna config.yaml:
+```bash
+nano config/config.yaml
+```
+
+2. Ändra placeholder-värdena till dina riktiga värden:
+```yaml
+mqtt:
+  broker: "din-broker.com"          # ÄNDRA från YOUR_MQTT_BROKER_ADDRESS
+                                     # Exempel: xxx.s1.eu.hivemq.cloud (HiveMQ)
+                                     # Exempel: localhost eller 192.168.1.100 (lokal)
+  port: 8883
+  username: "ditt_användarnamn"    # ÄNDRA från YOUR_MQTT_USERNAME
+  password: "ditt_lösenord"        # ÄNDRA från YOUR_MQTT_PASSWORD
+```
+
+3. Testa anslutningen:
+```bash
+python test_mqtt.py
+```
+
+**Lösning B: Kör utan MQTT (testläge)**
+
+Om du inte har en MQTT broker:
 ```yaml
 # I config/config.yaml:
 mqtt:
@@ -224,21 +251,11 @@ Genio AI kommer att:
 - ✅ Spela upp svar
 - ⚠️ Inte ansluta till n8n (MQTT avstängt)
 
-**Lösning B: Konfigurera MQTT korrekt**
-```yaml
-mqtt:
-  broker: "192.168.1.100"  # Eller "mqtt.example.com"
-  port: 8883
-  username: "user"
-  password: "pass"
-```
-
-Testa anslutningen:
-```bash
-ping mqtt.example.com
-# eller
-mosquitto_pub -h mqtt.example.com -p 8883 -t test -m "hello"
-```
+**Vanliga misstag:**
+- ❌ Glömt ändra `YOUR_MQTT_BROKER_ADDRESS` till riktig broker-adress
+- ❌ Glömt ändra `YOUR_MQTT_USERNAME` och `YOUR_MQTT_PASSWORD`
+- ❌ Använder exempel-adressen från HiveMQ som inte är din egen
+- ❌ Inkluderat "mqtt://" i broker-adressen (använd bara värdnamnet)
 
 ### Problem 7: PyAudio installation error
 

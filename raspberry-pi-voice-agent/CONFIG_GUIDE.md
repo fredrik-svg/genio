@@ -176,18 +176,27 @@ git add .gitignore config/config.yaml.example .env.example
 nano config/config.yaml
 ```
 
-2. Fyll i dessa tre saker:
+2. Fyll i dessa fyra saker (MÅSTE ÄNDRAS från placeholder-värden):
 ```yaml
 wakeword_detection:
-  access_key: "din_porcupine_key_från_console.picovoice.ai"
+  access_key: "din_porcupine_key_från_console.picovoice.ai"  # Ändra från YOUR_PORCUPINE_ACCESS_KEY_HERE
 
 mqtt:
-  broker: "mqtt://din-broker-adress"
-  username: "ditt_mqtt_användarnamn"
-  password: "ditt_mqtt_lösenord"
+  broker: "din-broker-adress"  # Ändra från YOUR_MQTT_BROKER_ADDRESS
+  username: "ditt_mqtt_användarnamn"  # Ändra från YOUR_MQTT_USERNAME
+  password: "ditt_mqtt_lösenord"  # Ändra från YOUR_MQTT_PASSWORD
 ```
 
 3. Klart! Ingen .env-fil behövs.
+
+**Varför finns .env.example?**
+
+`.env.example` är en **valfri** alternativ metod för konfiguration. Den finns där för:
+- Användare som föredrar att hålla känsliga värden separerade från huvudkonfigurationen
+- Team-miljöer där olika utvecklare har olika credentials
+- När du vill ha olika konfigurationer för utveckling och produktion
+
+**Du behöver INTE använda .env** - config.yaml är tillräckligt!
 
 ## Validera din konfiguration
 
@@ -208,19 +217,27 @@ print('TTS Model:', settings.TTS_MODEL_PATH)
 ## Vanliga frågor
 
 ### Måste jag ha en .env-fil?
-**Nej!** Du kan lägga allt i config.yaml. .env är valfritt.
+**Nej!** Du kan lägga allt i config.yaml. .env är helt valfritt och finns bara som ett alternativ för användare som föredrar att separera känsliga värden.
+
+### Varför finns .env.example med om den inte behövs?
+**.env.example finns som en valfri metod** för användare som:
+- Vill hålla känsliga värden (lösenord, API-nycklar) separerade från huvudkonfigurationen
+- Arbetar i team-miljöer och behöver olika credentials per utvecklare
+- Vill enkelt växla mellan olika konfigurationer (utveckling/produktion)
+
+**För de flesta användare är config.yaml tillräckligt!**
 
 ### Vilken är enklast?
-**config.yaml** - bara en fil att redigera.
+**config.yaml** - bara en fil att redigera. Rekommenderas för de flesta användare.
 
 ### Vilken är säkrast?
-**.env** - kan enkelt exkluderas från git och backuper.
+**.env** - kan enkelt exkluderas från git och backuper. Bra för team-miljöer.
 
 ### Kan jag använda båda?
-**Ja!** .env-värden har företräde över config.yaml.
+**Ja!** .env-värden har företräde över config.yaml, så du kan ha grundläggande konfiguration i config.yaml och känsliga värden i .env.
 
 ### Vad händer om en inställning saknas?
-Standardvärden används. Vissa (som PORCUPINE_ACCESS_KEY) ger en varning.
+Standardvärden används. Vissa viktiga inställningar (som PORCUPINE_ACCESS_KEY, MQTT_BROKER, MQTT_USERNAME, MQTT_PASSWORD) ger en varning om de har placeholder-värden eller saknas.
 
 ### Hur ändrar jag konfiguration efter installation?
 Redigera bara config.yaml (eller .env) och starta om applikationen.

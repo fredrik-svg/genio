@@ -141,19 +141,23 @@ Om du får felet `error: externally-managed-environment`:
    nano config/config.yaml
    ```
    
-   Fyll i:
+   Ändra dessa placeholder-värden till dina riktiga värden:
    ```yaml
    wakeword_detection:
-     access_key: "din_porcupine_key"  # Från https://console.picovoice.ai/
+     access_key: "din_porcupine_key"  # Ändra från YOUR_PORCUPINE_ACCESS_KEY_HERE
+                                       # Från https://console.picovoice.ai/
    
    mqtt:
-     broker: "mqtt://din-broker.com"
+     broker: "din-broker.com"          # Ändra från YOUR_MQTT_BROKER_ADDRESS
      port: 8883
-     username: "ditt_användarnamn"
-     password: "ditt_lösenord"
+     username: "ditt_användarnamn"    # Ändra från YOUR_MQTT_USERNAME
+     password: "ditt_lösenord"        # Ändra från YOUR_MQTT_PASSWORD
    ```
 
-   **Metod B: .env + config.yaml (Mer flexibelt)**
+   **Metod B: .env + config.yaml (Valfritt, mer flexibelt)**
+   
+   ⚠️ OBS: .env är VALFRITT och behövs bara om du vill separera känsliga värden
+   
    ```bash
    cp .env.example .env
    nano .env
@@ -162,11 +166,12 @@ Om du får felet `error: externally-managed-environment`:
    Lägg till i .env:
    ```env
    PORCUPINE_ACCESS_KEY=din_key
+   MQTT_BROKER=din-broker.com
    MQTT_USERNAME=ditt_user
    MQTT_PASSWORD=ditt_pass
    ```
 
-   Se [CONFIG_GUIDE.md](CONFIG_GUIDE.md) för mer detaljer.
+   Se [CONFIG_GUIDE.md](CONFIG_GUIDE.md) för mer detaljer om varför .env.example finns och när du behöver använda den.
 
 5. Test wake word detection:
    ```bash

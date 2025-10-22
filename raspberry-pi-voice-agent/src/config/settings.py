@@ -18,9 +18,9 @@ with open(config_file, 'r') as f:
 # Porcupine Wake Word settings
 # Försök först från .env, sedan config.yaml
 PORCUPINE_ACCESS_KEY = os.getenv('PORCUPINE_ACCESS_KEY') or config.get('wakeword_detection', {}).get('access_key', '')
-if not PORCUPINE_ACCESS_KEY:
+if not PORCUPINE_ACCESS_KEY or PORCUPINE_ACCESS_KEY == "YOUR_PORCUPINE_ACCESS_KEY_HERE":
     print("⚠️  VARNING: PORCUPINE_ACCESS_KEY är inte konfigurerad!")
-    print("   Lägg till i .env eller config.yaml")
+    print("   Lägg till i config.yaml eller .env")
     print("   Skaffa gratis key: https://console.picovoice.ai/")
     
 WAKE_WORD = os.getenv('WAKE_WORD') or config.get('wakeword_detection', {}).get('keyword', 'porcupine')
@@ -50,6 +50,14 @@ MQTT_CLIENT_ID = config.get('mqtt', {}).get('client_id', 'genio_ai')
 MQTT_USERNAME = os.getenv('MQTT_USERNAME') or config.get('mqtt', {}).get('username', '')
 MQTT_PASSWORD = os.getenv('MQTT_PASSWORD') or config.get('mqtt', {}).get('password', '')
 MQTT_USE_TLS = os.getenv('MQTT_USE_TLS', 'true').lower() == 'true' if os.getenv('MQTT_USE_TLS') else config.get('mqtt', {}).get('use_tls', True)
+
+# Warn about placeholder values
+if MQTT_BROKER in ["YOUR_MQTT_BROKER_ADDRESS", "mqtt.example.com"]:
+    print("⚠️  VARNING: MQTT_BROKER har inte ändrats från exempel-värdet!")
+    print("   Uppdatera config.yaml eller .env med din riktiga broker-adress")
+if MQTT_USERNAME in ["YOUR_MQTT_USERNAME", ""] or MQTT_PASSWORD in ["YOUR_MQTT_PASSWORD", ""]:
+    print("⚠️  VARNING: MQTT credentials är inte konfigurerade!")
+    print("   Uppdatera config.yaml eller .env med username och password")
 
 # Logging settings
 LOG_LEVEL = os.getenv('LOG_LEVEL') or config.get('logging', {}).get('level', 'INFO')
