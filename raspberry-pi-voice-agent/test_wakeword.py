@@ -7,43 +7,40 @@ Testar Porcupine wake word detection
 import pvporcupine
 import pyaudio
 import struct
-import os
-from dotenv import load_dotenv
+import sys
+from pathlib import Path
 
-# Ladda miljövariabler
-load_dotenv()
+# Add src to path to import settings
+sys.path.insert(0, str(Path(__file__).parent / 'src'))
+from config import settings
 
 def main():
     print("🤖 Genio AI - Wake Word Test")
     print("=" * 50)
     
-    # Hämta access key
-    access_key = os.getenv('PORCUPINE_ACCESS_KEY')
+    # Hämta access key från config
+    access_key = settings.PORCUPINE_ACCESS_KEY
     
-    if not access_key:
-        print("❌ ERROR: PORCUPINE_ACCESS_KEY inte satt!")
+    if not access_key or access_key == "YOUR_PORCUPINE_ACCESS_KEY_HERE":
+        print("❌ ERROR: PORCUPINE_ACCESS_KEY inte konfigurerad!")
         print("\nSteg för att fixa:")
         print("1. Gå till https://console.picovoice.ai/")
         print("2. Skapa ett gratis konto")
         print("3. Generera en Access Key")
-        print("4. Kopiera .env.example till .env:")
-        print("   cp .env.example .env")
-        print("5. Redigera .env och lägg till din key:")
-        print("   PORCUPINE_ACCESS_KEY=din_key_här")
+        print("4. Redigera config/config.yaml:")
+        print("   wakeword_detection:")
+        print("     access_key: 'din_key_här'")
         return 1
     
     print(f"✅ Access Key hittad: {access_key[:10]}...")
     
-    # Wake word att testa (använd inbyggda keywords)
-    wake_word = os.getenv('WAKE_WORD', 'porcupine')
+    # Wake word att testa
+    wake_word = settings.WAKE_WORD
     
     try:
         print(f"\n🔧 Initialiserar Porcupine med wake word: '{wake_word}'")
         
         # Import the PorcupineDetector class
-        import sys
-        from pathlib import Path
-        sys.path.insert(0, str(Path(__file__).parent / 'src'))
         from wakeword.porcupine_detector import PorcupineDetector
         
         # Create detector instance

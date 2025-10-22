@@ -104,9 +104,6 @@ def test_mqtt_connection():
         print("   2. Ändra 'broker:' från 'YOUR_MQTT_BROKER_ADDRESS' till din riktiga broker")
         print("      Exempel för HiveMQ: xxx.s1.eu.hivemq.cloud")
         print("      Exempel för lokal: localhost")
-        print("\n   Eller använd .env:")
-        print("   1. Kopiera: cp .env.example .env")
-        print("   2. Ändra MQTT_BROKER i .env till din riktiga broker")
         return False
     
     if not MQTT_USERNAME or not MQTT_PASSWORD or MQTT_USERNAME == "YOUR_MQTT_USERNAME" or MQTT_PASSWORD == "YOUR_MQTT_PASSWORD":
@@ -115,9 +112,6 @@ def test_mqtt_connection():
         print("\n   📝 Så här fixar du:")
         print("   1. Öppna: config/config.yaml")
         print("   2. Ändra 'username:' och 'password:' till dina riktiga credentials")
-        print("\n   Eller använd .env:")
-        print("   1. Kopiera: cp .env.example .env")
-        print("   2. Ändra MQTT_USERNAME och MQTT_PASSWORD i .env")
         return False
     
     print("\n🔄 Initializing MQTT client...")
