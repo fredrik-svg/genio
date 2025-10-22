@@ -1,6 +1,38 @@
 # Genio AI - Lösningar för Vanliga Problem
 
-## Problem 1: ImportError: cannot import name 'FasterWhisper'
+## Problem 1: STT Model Error - "Repository Not Found models/faster-whisper"
+
+**Symptom:**
+```
+RepositoryNotFoundError: 401 Client Error
+Repository Not Found for url: https://huggingface.co/api/models/models/faster-whisper/
+```
+
+**Orsak:**
+`config.yaml` har fel värde för STT model—använder sökväg istället för modellstorlek.
+
+**Lösning:** ✅ **FIXAT!**
+```yaml
+# RÄTT (i config/config.yaml):
+stt:
+  model_size: "base"  # tiny, base, small, medium, large
+  language: "sv"
+
+# FEL (använd INTE detta):
+stt:
+  model_path: "models/faster-whisper"  # Detta är fel!
+```
+
+**Giltiga modellstorlekar:**
+- `tiny` - Snabbast, lägst kvalitet (~75 MB)
+- `base` - **Rekommenderad för Raspberry Pi** (~150 MB) ⭐
+- `small` - Bättre kvalitet (~500 MB)
+- `medium` - Mycket bra (~1.5 GB)
+- `large` - Bäst kvalitet (~3 GB)
+
+**Se [STT_SETUP.md](STT_SETUP.md) för fullständig guide.**
+
+## Problem 2: ImportError: cannot import name 'FasterWhisper'
 
 **Symptom:**
 ```

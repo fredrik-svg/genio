@@ -3,7 +3,17 @@
 
 > An intelligent voice assistant for Raspberry Pi with Swedish language support
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](ht## Documentation
+
+- 📖 **[CONFIG_GUIDE.md](CONFIG_GUIDE.md)** - Guide för konfiguration (.env vs config.yaml)
+- 🚀 **[QUICKREF.md](QUICKREF.md)** - Snabbreferens för daglig användning
+- 🔧 **[INSTALLATION.md](INSTALLATION.md)** - Detaljerad installationsguide med lösningar för vanliga problem
+- 🎤 **[WAKEWORD_SETUP.md](WAKEWORD_SETUP.md)** - Guide för Porcupine wake word setup
+- 🎙️ **[STT_SETUP.md](STT_SETUP.md)** - Guide för Faster Whisper speech-to-text setup
+- 🔊 **[PIPER_INSTALLATION.md](PIPER_INSTALLATION.md)** - Guide för Piper TTS-installation
+- 🆘 **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Felsökning och lösningar
+- 🎨 **[REBRANDING.md](REBRANDING.md)** - Information om Genio AI-namnbytet
+- 📝 **[CHANGELOG_PIPER.md](CHANGELOG_PIPER.md)** - Versionshistorik och ändringarpython.org/downloads/)
 [![Piper TTS](https://img.shields.io/badge/TTS-Piper-green.svg)](https://github.com/rhasspy/piper)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 

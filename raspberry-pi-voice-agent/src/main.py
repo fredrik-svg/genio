@@ -2,7 +2,7 @@ import paho.mqtt.client as mqtt
 from config.settings import (
     MQTT_BROKER, MQTT_PORT, MQTT_USERNAME, MQTT_PASSWORD,
     PORCUPINE_ACCESS_KEY, WAKE_WORD, WAKE_WORD_MODEL_PATH, WAKE_WORD_SENSITIVITY,
-    STT_MODEL_PATH, TTS_MODEL_PATH, TTS_CONFIG_PATH, TTS_LANGUAGE
+    STT_MODEL_SIZE, STT_LANGUAGE, TTS_MODEL_PATH, TTS_CONFIG_PATH, TTS_LANGUAGE
 )
 from audio.microphone import Microphone
 from audio.speaker import Speaker
@@ -55,7 +55,7 @@ class GenioAI:
         
         # Initialize STT
         self.logger.info("Initializing speech-to-text...")
-        self.stt = FasterWhisper(STT_MODEL_PATH)
+        self.stt = FasterWhisper(model_size=STT_MODEL_SIZE, language=STT_LANGUAGE)
 
         self.setup_mqtt()
         self.logger.info("✅ Genio AI initialized successfully!")

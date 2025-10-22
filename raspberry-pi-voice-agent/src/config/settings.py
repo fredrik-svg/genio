@@ -28,9 +28,11 @@ WAKE_WORD_MODEL_PATH = os.getenv('WAKE_WORD_MODEL_PATH') or config.get('wakeword
 WAKE_WORD_SENSITIVITY = float(os.getenv('WAKE_WORD_SENSITIVITY', '0.5'))
 
 # Speech-to-Text settings
-STT_MODEL_PATH = os.getenv('STT_MODEL_PATH') or config.get('stt', {}).get('model_path', 'path/to/faster_whisper/model')
+STT_MODEL_SIZE = os.getenv('STT_MODEL_SIZE') or config.get('stt', {}).get('model_size', 'base')
 STT_LANGUAGE = os.getenv('STT_LANGUAGE') or config.get('stt', {}).get('language', 'sv')
-STT_MODEL = STT_MODEL_PATH  # Alias for backward compatibility
+# Legacy support for model_path (if someone still uses it)
+STT_MODEL_PATH = os.getenv('STT_MODEL_PATH') or config.get('stt', {}).get('model_path', STT_MODEL_SIZE)
+STT_MODEL = STT_MODEL_SIZE  # Alias for backward compatibility
 
 # Text-to-Speech settings
 TTS_ENGINE = config.get('tts', {}).get('engine', 'piper')

@@ -7,7 +7,7 @@ wakeword_detection:
 
 stt:
   enabled: true
-  model_path: "path/to/faster_whisper/model"
+  model_size: "base"  # Model size: tiny, base, small, medium, large (base recommended for Raspberry Pi)
   language: "sv"  # Swedish language
 
 tts:
