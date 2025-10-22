@@ -4,8 +4,11 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
-load_dotenv()
+# Load environment variables from .env file if it exists
+# .env is OPTIONAL - config.yaml fungerar också ensamt
+env_file = Path(__file__).parent.parent.parent / '.env'
+if env_file.exists():
+    load_dotenv()
 
 # Load configuration from YAML file
 config_file = Path(__file__).parent.parent.parent / 'config' / 'config.yaml'
@@ -13,7 +16,13 @@ with open(config_file, 'r') as f:
     config = yaml.safe_load(f)
 
 # Porcupine Wake Word settings
-PORCUPINE_ACCESS_KEY = os.getenv('PORCUPINE_ACCESS_KEY', '')
+# Försök först från .env, sedan config.yaml
+PORCUPINE_ACCESS_KEY = os.getenv('PORCUPINE_ACCESS_KEY') or config.get('wakeword_detection', {}).get('access_key', '')
+if not PORCUPINE_ACCESS_KEY:
+    print("⚠️  VARNING: PORCUPINE_ACCESS_KEY är inte konfigurerad!")
+    print("   Lägg till i .env eller config.yaml")
+    print("   Skaffa gratis key: https://console.picovoice.ai/")
+    
 WAKE_WORD = os.getenv('WAKE_WORD') or config.get('wakeword_detection', {}).get('keyword', 'porcupine')
 WAKE_WORD_MODEL_PATH = os.getenv('WAKE_WORD_MODEL_PATH') or config.get('wakeword_detection', {}).get('model_path', '')
 WAKE_WORD_SENSITIVITY = float(os.getenv('WAKE_WORD_SENSITIVITY', '0.5'))

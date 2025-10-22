@@ -123,25 +123,41 @@ Om du får felet `error: externally-managed-environment`:
    pip install -r requirements.txt
    ```
 
-4. Configure the application by editing `config/config.yaml` to set your desired parameters.
-   - **MQTT broker address**
-   - **MQTT port: 8883** (TLS/SSL)
-   - **MQTT username/password**
-   - **Wake word settings**
+4. **Konfigurera applikationen** - Välj EN av dessa metoder:
 
-5. **VIKTIGT: Konfigurera Porcupine Access Key**
+   **Metod A: Endast config.yaml (Enklast, rekommenderat)**
    ```bash
-   # Kopiera exempel-filen
-   cp .env.example .env
+   nano config/config.yaml
+   ```
    
-   # Redigera .env
-   nano .env
+   Fyll i:
+   ```yaml
+   wakeword_detection:
+     access_key: "din_porcupine_key"  # Från https://console.picovoice.ai/
    
-   # Lägg till din Porcupine Access Key från https://console.picovoice.ai/
-   PORCUPINE_ACCESS_KEY=din_key_här
+   mqtt:
+     broker: "mqtt://din-broker.com"
+     port: 8883
+     username: "ditt_användarnamn"
+     password: "ditt_lösenord"
    ```
 
-6. Test wake word detection:
+   **Metod B: .env + config.yaml (Mer flexibelt)**
+   ```bash
+   cp .env.example .env
+   nano .env
+   ```
+   
+   Lägg till i .env:
+   ```env
+   PORCUPINE_ACCESS_KEY=din_key
+   MQTT_USERNAME=ditt_user
+   MQTT_PASSWORD=ditt_pass
+   ```
+
+   Se [CONFIG_GUIDE.md](CONFIG_GUIDE.md) för mer detaljer.
+
+5. Test wake word detection:
    ```bash
    python test_wakeword.py
    ```
@@ -163,9 +179,12 @@ Once Genio AI is running, it will listen for the specified wake word. Upon detec
 
 ## Documentation
 
-- 📖 **[INSTALLATION.md](INSTALLATION.md)** - Detaljerad installationsguide med lösningar för vanliga problem
+- 📖 **[CONFIG_GUIDE.md](CONFIG_GUIDE.md)** - Guide för konfiguration (.env vs config.yaml)
 - 🚀 **[QUICKREF.md](QUICKREF.md)** - Snabbreferens för daglig användning
-- 🎤 **[PIPER_INSTALLATION.md](PIPER_INSTALLATION.md)** - Guide för Piper TTS-installation
+- 🔧 **[INSTALLATION.md](INSTALLATION.md)** - Detaljerad installationsguide med lösningar för vanliga problem
+- 🎤 **[WAKEWORD_SETUP.md](WAKEWORD_SETUP.md)** - Guide för Porcupine wake word setup
+- � **[PIPER_INSTALLATION.md](PIPER_INSTALLATION.md)** - Guide för Piper TTS-installation
+- 🆘 **[TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Felsökning och lösningar
 - 🎨 **[REBRANDING.md](REBRANDING.md)** - Information om Genio AI-namnbytet
 - 📝 **[CHANGELOG_PIPER.md](CHANGELOG_PIPER.md)** - Versionshistorik och ändringar
 

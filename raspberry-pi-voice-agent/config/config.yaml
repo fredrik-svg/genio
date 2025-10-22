@@ -1,7 +1,9 @@
 wakeword_detection:
   enabled: true
-  model_path: "path/to/porcupine/model.pv"
-  keyword: "hej"  # Wake word in Swedish
+  access_key: ""  # Din Porcupine access key från https://console.picovoice.ai/ (eller använd .env)
+  keyword: "porcupine"  # Inbyggda: porcupine, alexa, computer, jarvis
+  sensitivity: 0.5
+  model_path: ""  # Path till custom .ppn fil (optional)
 
 stt:
   enabled: true

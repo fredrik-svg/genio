@@ -18,3 +18,6 @@ class FasterWhisperSTT:
     def transcribe_from_stream(self, audio_stream):
         segments, _ = self.model.transcribe(audio_stream, beam_size=5)
         return " ".join(segment.text for segment in segments)
+
+# Alias för backward compatibility
+FasterWhisper = FasterWhisperSTT

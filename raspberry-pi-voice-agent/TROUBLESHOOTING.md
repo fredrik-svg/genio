@@ -1,6 +1,39 @@
-# Genio AI - Lösning för Installation
+# Genio AI - Lösningar för Vanliga Problem
 
-## Problem: "Porcupine" paket hittades inte
+## Problem 1: ImportError: cannot import name 'FasterWhisper'
+
+**Symptom:**
+```
+ImportError: cannot import name 'FasterWhisper' from 'stt.faster_whisper'
+```
+
+**Orsak:**
+Klassnamnet i filen matchade inte vad som importerades.
+
+**Lösning:** ✅ **FIXAT!**
+Filen har uppdaterats med ett alias. Om du fortfarande får felet:
+```bash
+cd genio/raspberry-pi-voice-agent
+git pull origin main
+```
+
+## Problem 2: Behövs både config.yaml och .env?
+
+**Svar: NEJ!** Du kan välja:
+
+### Alternativ A: Endast config.yaml (Enklast) ✅
+```bash
+nano config/config.yaml
+```
+
+Lägg till allt där, inklusive Porcupine key och MQTT-inställningar.
+
+### Alternativ B: .env + config.yaml
+Använd .env för känslig data (API-nycklar, lösenord).
+
+**Se [CONFIG_GUIDE.md](CONFIG_GUIDE.md) för fullständig guide.**
+
+## Problem 3: "Porcupine" paket hittades inte
 
 ### Orsak
 `Porcupine` är inte namnet på pip-paketet. Det riktiga paketet heter `pvporcupine`.
