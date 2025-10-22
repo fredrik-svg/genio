@@ -14,8 +14,9 @@ Genio AI is an intelligent voice agent running on a Raspberry Pi 5, designed to 
 - **Wake Word Detection**: Utilizes Porcupine for detecting a specific wake word.
 - **Speech-to-Text**: Integrates Faster Whisper for converting spoken language into text.
 - **Text-to-Speech**: Uses Piper TTS for high-quality, local neural text-to-speech synthesis.
-- **MQTT Communication**: Communicates with an n8n workflow via MQTT protocol.
+- **MQTT Communication**: Communicates with an n8n workflow via MQTT protocol (port 8883 with TLS/SSL support).
 - **Swedish Language Support**: The application is configured to operate in Swedish.
+- **Offline Capable**: Works completely offline after initial setup.
 
 ## Project Structure
 ```
@@ -55,13 +56,48 @@ genio-ai
 ```
 
 ## Installation
+
+### Snabbinstallation (Rekommenderat)
+
+```bash
+# 1. Klona repository
+git clone https://github.com/fredrik-svg/genio.git
+cd genio/raspberry-pi-voice-agent
+
+# 2. Kör installationsscript
+chmod +x install.sh
+./install.sh
+
+# 3. Aktivera virtuell miljö
+source genio-env/bin/activate
+
+# 4. Konfigurera applikationen
+nano config/config.yaml  # Redigera MQTT-inställningar etc.
+
+# 5. Testa installation
+python test_piper.py
+
+# 6. Kör Genio AI
+python src/main.py
+```
+
+### Manuell installation
+
+Om du får felet `error: externally-managed-environment`:
+
 1. Clone the repository:
-   ```
-   git clone <repository-url>
-   cd raspberry-pi-voice-agent
+   ```bash
+   git clone https://github.com/fredrik-svg/genio.git
+   cd genio/raspberry-pi-voice-agent
    ```
 
-2. Install Piper TTS:
+2. **Skapa virtuell miljö (VIKTIGT för att undvika "externally-managed-environment" fel):**
+   ```bash
+   python3 -m venv genio-env
+   source genio-env/bin/activate
+   ```
+
+3. Install Piper TTS:
    ```bash
    # Install Piper on Raspberry Pi
    wget https://github.com/rhasspy/piper/releases/download/v1.2.0/piper_arm64.tar.gz
@@ -70,7 +106,7 @@ genio-ai
    sudo chmod +x /usr/local/bin/piper
    ```
 
-3. Download Swedish voice model for Piper:
+4. Download Swedish voice model for Piper:
    ```bash
    # Create models directory
    mkdir -p models
@@ -82,15 +118,19 @@ genio-ai
    cd ..
    ```
 
-4. Install Python dependencies:
-   ```
+5. Install Python dependencies:
+   ```bash
    pip install -r requirements.txt
    ```
 
-5. Configure the application by editing `config/config.yaml` to set your desired parameters.
+6. Configure the application by editing `config/config.yaml` to set your desired parameters.
+   - **MQTT broker address**
+   - **MQTT port: 8883** (TLS/SSL)
+   - **MQTT username/password**
+   - **Wake word settings**
 
-6. Run the application:
-   ```
+7. Run the application:
+   ```bash
    python src/main.py
    ```
 
@@ -103,6 +143,32 @@ Once Genio AI is running, it will listen for the specified wake word. Upon detec
 3. Speak your command
 4. Command is sent to n8n via MQTT
 5. Response is spoken back using Piper TTS
+
+## Documentation
+
+- 📖 **[INSTALLATION.md](INSTALLATION.md)** - Detaljerad installationsguide med lösningar för vanliga problem
+- 🚀 **[QUICKREF.md](QUICKREF.md)** - Snabbreferens för daglig användning
+- 🎤 **[PIPER_INSTALLATION.md](PIPER_INSTALLATION.md)** - Guide för Piper TTS-installation
+- 🎨 **[REBRANDING.md](REBRANDING.md)** - Information om Genio AI-namnbytet
+- 📝 **[CHANGELOG_PIPER.md](CHANGELOG_PIPER.md)** - Versionshistorik och ändringar
+
+## Troubleshooting
+
+### "externally-managed-environment" error
+This is a common issue on modern Linux systems. **Solution:** Use a virtual environment:
+```bash
+python3 -m venv genio-env
+source genio-env/bin/activate
+pip install -r requirements.txt
+```
+
+### MQTT Connection Issues
+- Verify MQTT broker is running
+- Check port 8883 is open
+- Confirm username/password in `config/config.yaml`
+- Test connection: `mosquitto_pub -h broker -p 8883 -t test -m "hello"`
+
+See [INSTALLATION.md](INSTALLATION.md) for more troubleshooting help.
 
 ## Contributing
 Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.

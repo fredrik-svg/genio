@@ -26,7 +26,7 @@ TTS_MODEL = TTS_MODEL_PATH  # Alias for backward compatibility
 
 # MQTT settings
 MQTT_BROKER = config.get('mqtt', {}).get('broker', 'mqtt.example.com')
-MQTT_PORT = config.get('mqtt', {}).get('port', 1883)
+MQTT_PORT = config.get('mqtt', {}).get('port', 8883)
 MQTT_TOPIC = config.get('mqtt', {}).get('topic', 'genio/agent')
 MQTT_CLIENT_ID = config.get('mqtt', {}).get('client_id', 'genio_ai')
 MQTT_USERNAME = config.get('mqtt', {}).get('username', '')

@@ -18,7 +18,7 @@ tts:
 
 mqtt:
   broker: "mqtt://your_mqtt_broker"
-  port: 1883
+  port: 8883
   topic: "genio/agent"
   client_id: "genio_ai"
   username: "your_username"
