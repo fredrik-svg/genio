@@ -1,6 +1,36 @@
 # Genio AI - Lösningar för Vanliga Problem
 
-## Problem 1: STT Model Error - "Repository Not Found models/faster-whisper"
+## Problem 1: TypeError: incompatible constructor arguments (language parameter)
+
+**Symptom:**
+```
+TypeError: __init__(): incompatible constructor arguments
+...
+Invoked with: ...; kwargs: device='cpu', ..., language='sv'
+```
+
+**Orsak:**
+Faster Whisper's `WhisperModel` accepterar inte `language` som parameter vid initialisering. Språket ska anges vid transkribering.
+
+**Lösning:** ✅ **FIXAT!**
+```python
+# Fel sätt (gammal kod):
+self.model = WhisperModel(model_size, device="cpu", language=language)
+
+# Rätt sätt (uppdaterad kod):
+self.language = language
+self.model = WhisperModel(model_size, device="cpu")
+# Använd sedan language vid transkribering:
+segments, _ = self.model.transcribe(audio_file, language=self.language)
+```
+
+Om du fortfarande får felet, uppdatera koden:
+```bash
+cd genio/raspberry-pi-voice-agent
+git pull origin main
+```
+
+## Problem 2: STT Model Error - "Repository Not Found models/faster-whisper"
 
 **Symptom:**
 ```
@@ -32,7 +62,7 @@ stt:
 
 **Se [STT_SETUP.md](STT_SETUP.md) för fullständig guide.**
 
-## Problem 2: ImportError: cannot import name 'FasterWhisper'
+## Problem 3: ImportError: cannot import name 'FasterWhisper'
 
 **Symptom:**
 ```
@@ -49,7 +79,7 @@ cd genio/raspberry-pi-voice-agent
 git pull origin main
 ```
 
-## Problem 2: Behövs både config.yaml och .env?
+## Problem 4: Behövs både config.yaml och .env?
 
 **Svar: NEJ!** Du kan välja:
 
@@ -65,7 +95,7 @@ Använd .env för känslig data (API-nycklar, lösenord).
 
 **Se [CONFIG_GUIDE.md](CONFIG_GUIDE.md) för fullständig guide.**
 
-## Problem 3: "Porcupine" paket hittades inte
+## Problem 5: "Porcupine" paket hittades inte
 
 ### Orsak
 `Porcupine` är inte namnet på pip-paketet. Det riktiga paketet heter `pvporcupine`.

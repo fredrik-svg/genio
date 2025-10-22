@@ -2,7 +2,8 @@ from faster_whisper import WhisperModel
 
 class FasterWhisperSTT:
     def __init__(self, model_size="base", language="sv"):
-        self.model = WhisperModel(model_size, device="cuda" if self._is_cuda_available() else "cpu", language=language)
+        self.language = language
+        self.model = WhisperModel(model_size, device="cuda" if self._is_cuda_available() else "cpu")
 
     def _is_cuda_available(self):
         try:
@@ -12,11 +13,11 @@ class FasterWhisperSTT:
             return False
 
     def transcribe(self, audio_file):
-        segments, _ = self.model.transcribe(audio_file, beam_size=5)
+        segments, _ = self.model.transcribe(audio_file, beam_size=5, language=self.language)
         return " ".join(segment.text for segment in segments)
 
     def transcribe_from_stream(self, audio_stream):
-        segments, _ = self.model.transcribe(audio_stream, beam_size=5)
+        segments, _ = self.model.transcribe(audio_stream, beam_size=5, language=self.language)
         return " ".join(segment.text for segment in segments)
 
 # Alias för backward compatibility
