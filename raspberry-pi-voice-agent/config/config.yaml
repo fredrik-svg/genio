@@ -1,0 +1,27 @@
+wakeword_detection:
+  enabled: true
+  model_path: "path/to/porcupine/model.pv"
+  keyword: "hej"  # Wake word in Swedish
+
+stt:
+  enabled: true
+  model_path: "path/to/faster_whisper/model"
+  language: "sv"  # Swedish language
+
+tts:
+  enabled: true
+  engine: "espeak"  # Suggested TTS engine
+  language: "sv"  # Swedish language
+  voice: "default"
+
+mqtt:
+  broker: "mqtt://your_mqtt_broker"
+  port: 1883
+  topic: "voice/agent"
+  client_id: "raspberry_pi_voice_agent"
+  username: "your_username"
+  password: "your_password"
+
+logging:
+  level: "INFO"
+  file: "logs/voice_agent.log"
