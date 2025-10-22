@@ -123,11 +123,28 @@ Om du får felet `error: externally-managed-environment`:
    pip install -r requirements.txt
    ```
 
-6. Configure the application by editing `config/config.yaml` to set your desired parameters.
+4. Configure the application by editing `config/config.yaml` to set your desired parameters.
    - **MQTT broker address**
    - **MQTT port: 8883** (TLS/SSL)
    - **MQTT username/password**
    - **Wake word settings**
+
+5. **VIKTIGT: Konfigurera Porcupine Access Key**
+   ```bash
+   # Kopiera exempel-filen
+   cp .env.example .env
+   
+   # Redigera .env
+   nano .env
+   
+   # Lägg till din Porcupine Access Key från https://console.picovoice.ai/
+   PORCUPINE_ACCESS_KEY=din_key_här
+   ```
+
+6. Test wake word detection:
+   ```bash
+   python test_wakeword.py
+   ```
 
 7. Run the application:
    ```bash

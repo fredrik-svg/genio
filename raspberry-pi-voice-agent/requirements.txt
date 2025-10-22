@@ -1,7 +1,9 @@
-Porcupine
+pvporcupine
+pyaudio
 faster-whisper
 paho-mqtt
 sounddevice
 numpy
 piper-tts
 PyYAML
+python-dotenv

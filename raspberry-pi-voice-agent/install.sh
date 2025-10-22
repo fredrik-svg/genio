@@ -63,6 +63,16 @@ print_info "Uppgraderar pip..."
 pip install --upgrade pip > /dev/null 2>&1
 print_success "Pip uppgraderad"
 
+# Installera systempaket för PyAudio
+print_info "Installerar systempaket för PyAudio..."
+if command -v apt-get &> /dev/null; then
+    sudo apt-get update > /dev/null 2>&1
+    sudo apt-get install -y portaudio19-dev python3-pyaudio > /dev/null 2>&1
+    print_success "Systempaket installerade"
+else
+    print_info "apt-get hittades inte, hoppar över systempaket"
+fi
+
 # Installera Python-dependencies
 print_info "Installerar Python-paket från requirements.txt..."
 pip install -r requirements.txt
@@ -119,6 +129,16 @@ print_info "Skapar logs-mapp..."
 mkdir -p logs
 print_success "Logs-mapp skapad"
 
+# Skapa .env fil om den inte finns
+if [ ! -f ".env" ]; then
+    print_info "Skapar .env fil från .env.example..."
+    cp .env.example .env
+    print_success ".env fil skapad"
+    print_info "⚠️  VIKTIGT: Redigera .env och lägg till din PORCUPINE_ACCESS_KEY!"
+else
+    print_success ".env fil finns redan"
+fi
+
 # Sammanfattning
 echo ""
 echo "================================"
@@ -126,20 +146,27 @@ echo -e "${GREEN}✓ Installation klar!${NC}"
 echo "================================"
 echo ""
 echo "Nästa steg:"
-echo "1. Redigera config/config.yaml med dina inställningar"
-echo "2. Aktivera miljön: source genio-env/bin/activate"
-echo "3. Testa installation: python test_piper.py"
-echo "4. Kör Genio AI: python src/main.py"
+echo "1. Skaffa Porcupine Access Key från https://console.picovoice.ai/"
+echo "2. Redigera .env och lägg till din PORCUPINE_ACCESS_KEY"
+echo "3. Redigera config/config.yaml med dina MQTT-inställningar"
+echo "4. Aktivera miljön: source genio-env/bin/activate"
+echo "5. Testa wake word: python test_wakeword.py"
+echo "6. Testa TTS: python test_piper.py"
+echo "7. Kör Genio AI: python src/main.py"
 echo ""
 echo "För att deaktivera virtuell miljö: deactivate"
 echo ""
 
 # Visa konfigurationstips
-print_info "Viktiga konfigurationsinställningar i config/config.yaml:"
-echo "  - MQTT broker: Uppdatera broker-adressen"
-echo "  - MQTT port: 8883 (TLS/SSL)"
-echo "  - MQTT användarnamn/lösenord"
-echo "  - Wake word: 'hej' (standard)"
+print_info "Viktiga konfigurationsinställningar:"
+echo "  .env fil:"
+echo "    - PORCUPINE_ACCESS_KEY (KRÄVS!)"
+echo "    - MQTT_BROKER, MQTT_USERNAME, MQTT_PASSWORD"
+echo ""
+echo "  config/config.yaml:"
+echo "    - MQTT broker: Uppdatera broker-adressen"
+echo "    - MQTT port: 8883 (TLS/SSL)"
+echo "    - Wake word: 'porcupine' (standard, gratis)"
 echo ""
 
 print_success "Genio AI är redo att användas! 🚀"

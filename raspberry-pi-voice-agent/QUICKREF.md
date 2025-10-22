@@ -6,6 +6,17 @@
 git clone https://github.com/fredrik-svg/genio.git && cd genio/raspberry-pi-voice-agent && chmod +x install.sh && ./install.sh
 ```
 
+**Efter installation:**
+```bash
+# 1. Skaffa Porcupine Access Key från https://console.picovoice.ai/
+# 2. Redigera .env och lägg till din key
+nano .env
+
+# 3. Testa wake word
+source genio-env/bin/activate
+python test_wakeword.py
+```
+
 ## Daglig användning
 
 ```bash
