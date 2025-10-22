@@ -129,16 +129,6 @@ print_info "Skapar logs-mapp..."
 mkdir -p logs
 print_success "Logs-mapp skapad"
 
-# Skapa .env fil om den inte finns
-if [ ! -f ".env" ]; then
-    print_info "Skapar .env fil från .env.example..."
-    cp .env.example .env
-    print_success ".env fil skapad"
-    print_info "⚠️  VIKTIGT: Redigera .env och lägg till din PORCUPINE_ACCESS_KEY!"
-else
-    print_success ".env fil finns redan"
-fi
-
 # Sammanfattning
 echo ""
 echo "================================"
@@ -147,7 +137,7 @@ echo "================================"
 echo ""
 echo "Nästa steg:"
 echo "1. Skaffa Porcupine Access Key från https://console.picovoice.ai/"
-echo "2. Redigera .env och lägg till din PORCUPINE_ACCESS_KEY"
+echo "2. Redigera config/config.yaml och lägg till din PORCUPINE_ACCESS_KEY"
 echo "3. Redigera config/config.yaml med dina MQTT-inställningar"
 echo "4. Aktivera miljön: source genio-env/bin/activate"
 echo "5. Testa wake word: python test_wakeword.py"
@@ -159,12 +149,10 @@ echo ""
 
 # Visa konfigurationstips
 print_info "Viktiga konfigurationsinställningar:"
-echo "  .env fil:"
-echo "    - PORCUPINE_ACCESS_KEY (KRÄVS!)"
-echo "    - MQTT_BROKER, MQTT_USERNAME, MQTT_PASSWORD"
-echo ""
 echo "  config/config.yaml:"
+echo "    - PORCUPINE_ACCESS_KEY (KRÄVS!)"
 echo "    - MQTT broker: Uppdatera broker-adressen"
+echo "    - MQTT username och password"
 echo "    - MQTT port: 8883 (TLS/SSL)"
 echo "    - Wake word: 'porcupine' (standard, gratis)"
 echo ""

@@ -133,7 +133,7 @@ Initializing speech-to-text...
 ```
 PORCUPINE_ACCESS_KEY is required!
 ```
-**Fix:** Add your Porcupine access key to `config/config.yaml` or `.env`
+**Fix:** Add your Porcupine access key to `config/config.yaml`
 
 ```
 TypeError: __init__(): incompatible constructor arguments
@@ -145,18 +145,12 @@ socket.gaierror: [Errno -2] Name or service not known
 ```
 **Fix:** Invalid MQTT broker address. Either configure correctly or leave empty to disable MQTT.
 
-## Configuration Files Priority
+## Configuration
 
-The application loads configuration in this order:
+The application loads configuration from `config/config.yaml`.
 
-1. **Environment variables** (highest priority)
-2. **`.env` file** (if exists)
-3. **`config/config.yaml`** (default values)
-
-You only need to configure ONE of these:
-
-### Simple Setup (Recommended)
-Just edit `config/config.yaml`:
+### Setup
+Edit `config/config.yaml`:
 ```yaml
 wakeword_detection:
   access_key: "YOUR_PORCUPINE_KEY"
@@ -164,15 +158,6 @@ wakeword_detection:
 mqtt:
   broker: ""  # Leave empty for test mode
 ```
-
-### Advanced Setup
-Use `.env` for sensitive data:
-```bash
-cp .env.example .env
-nano .env
-```
-
-Add:
 ```env
 PORCUPINE_ACCESS_KEY=your_key_here
 MQTT_BROKER=your-broker.com

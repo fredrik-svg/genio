@@ -12,24 +12,14 @@ Genio AI använder Porcupine från Picovoice för wake word detection. Denna gui
 
 ## Steg 2: Uppdatera konfigurationen
 
-### Metod A: Miljövariabel (Rekommenderat)
-
-Skapa en `.env` fil i projektmappen:
+Redigera `config/config.yaml`:
 
 ```bash
 cd genio/raspberry-pi-voice-agent
-nano .env
+nano config/config.yaml
 ```
 
-Lägg till:
-```env
-PORCUPINE_ACCESS_KEY=your_access_key_here
-```
-
-### Metod B: Direkt i config.yaml
-
-Redigera `config/config.yaml`:
-
+Lägg till din Access Key:
 ```yaml
 wakeword_detection:
   enabled: true
@@ -53,20 +43,16 @@ Porcupine har flera inbyggda wake words. För svenska rekommenderas:
 ### Custom wake word (kräver Picovoice konto):
 Du kan träna egna wake words (t.ex. "Hej Genio") via Picovoice Console.
 
-## Steg 4: Uppdatera settings.py
+## Steg 4: Testa wake word detection
 
-Vi behöver uppdatera `src/config/settings.py` för att läsa access key:
+Använd testfilen som finns i projektet:
 
-```python
-import os
-from dotenv import load_dotenv
-
-# Ladda miljövariabler
-load_dotenv()
-
-# Porcupine settings
-PORCUPINE_ACCESS_KEY = os.getenv('PORCUPINE_ACCESS_KEY') or config.get('wakeword_detection', {}).get('access_key', '')
+```bash
+source genio-env/bin/activate
+python test_wakeword.py
 ```
+
+Säg "porcupine" när den lyssnar.
 
 ## Alternativ: Använd Snowboy (Offline, Gratis)
 
@@ -128,64 +114,14 @@ openwakeword
 
 ## Test av wake word
 
-Skapa en testfil `test_wakeword.py`:
+Använd det inkluderade testskriptet:
 
-```python
-#!/usr/bin/env python3
-import pvporcupine
-import pyaudio
-import struct
-import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-access_key = os.getenv('PORCUPINE_ACCESS_KEY')
-
-if not access_key:
-    print("ERROR: PORCUPINE_ACCESS_KEY inte satt!")
-    print("Skapa en .env fil med din access key")
-    exit(1)
-
-# Använd inbyggt wake word "porcupine"
-porcupine = pvporcupine.create(
-    access_key=access_key,
-    keywords=['porcupine']
-)
-
-pa = pyaudio.PyAudio()
-audio_stream = pa.open(
-    rate=porcupine.sample_rate,
-    channels=1,
-    format=pyaudio.paInt16,
-    input=True,
-    frames_per_buffer=porcupine.frame_length
-)
-
-print("Lyssnar efter wake word 'porcupine'...")
-print("Säg 'porcupine' för att testa!")
-
-try:
-    while True:
-        pcm = audio_stream.read(porcupine.frame_length)
-        pcm = struct.unpack_from("h" * porcupine.frame_length, pcm)
-        keyword_index = porcupine.process(pcm)
-        
-        if keyword_index >= 0:
-            print("✅ Wake word detekterat!")
-            break
-finally:
-    audio_stream.close()
-    pa.terminate()
-    porcupine.delete()
-    print("Test klart!")
-```
-
-Kör testet:
 ```bash
 source genio-env/bin/activate
 python test_wakeword.py
 ```
+
+Detta skript läser konfigurationen från `config/config.yaml` och testar wake word-detekteringen.
 
 ## Felsökning
 

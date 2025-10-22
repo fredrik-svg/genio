@@ -79,19 +79,15 @@ cd genio/raspberry-pi-voice-agent
 git pull origin main
 ```
 
-## Problem 4: Behövs både config.yaml och .env?
+## Problem 4: Konfigurera Genio AI
 
-**Svar: NEJ!** Du kan välja:
+Använd `config.yaml` för all konfiguration:
 
-### Alternativ A: Endast config.yaml (Enklast) ✅
 ```bash
 nano config/config.yaml
 ```
 
 Lägg till allt där, inklusive Porcupine key och MQTT-inställningar.
-
-### Alternativ B: .env + config.yaml
-Använd .env för känslig data (API-nycklar, lösenord).
 
 **Se [CONFIG_GUIDE.md](CONFIG_GUIDE.md) för fullständig guide.**
 
@@ -111,7 +107,6 @@ sounddevice
 numpy
 piper-tts
 PyYAML
-python-dotenv
 ```
 
 ## Fullständig Installation
@@ -131,7 +126,6 @@ Scriptet kommer att:
 - ✅ Installera alla Python-dependencies
 - ✅ Ladda ner Piper TTS
 - ✅ Ladda ner svensk röstmodell
-- ✅ Skapa .env fil
 
 ### Steg 2: Skaffa Porcupine Access Key
 
@@ -141,22 +135,24 @@ Scriptet kommer att:
 4. Klicka "Create Access Key"
 5. Kopiera din access key
 
-### Steg 3: Konfigurera .env
+### Steg 3: Konfigurera config.yaml
 
 ```bash
-nano .env
+nano config/config.yaml
 ```
 
 Uppdatera:
-```env
+```yaml
 # VIKTIGT!
-PORCUPINE_ACCESS_KEY=din_access_key_här
+wakeword_detection:
+  access_key: "din_access_key_här"
 
-# MQTT (optional - kan också konfigureras i config.yaml)
-MQTT_BROKER=mqtt://din-broker.com
-MQTT_PORT=8883
-MQTT_USERNAME=ditt_användarnamn
-MQTT_PASSWORD=ditt_lösenord
+# MQTT (konfigurera med dina värden)
+mqtt:
+  broker: "din-broker.com"
+  port: 8883
+  username: "ditt_användarnamn"
+  password: "ditt_lösenord"
 ```
 
 ### Steg 4: Konfigurera MQTT
@@ -281,23 +277,10 @@ pvporcupine.PorcupineInvalidArgumentError: Invalid access key
 
 **Lösning:**
 1. Verifiera att du har kopierat hela access key (ingen extra mellanslag)
-2. Kontrollera att .env filen laddas: `cat .env | grep PORCUPINE`
-3. Testa direkt: `python -c "import os; from dotenv import load_dotenv; load_dotenv(); print(os.getenv('PORCUPINE_ACCESS_KEY'))"`
+2. Kontrollera att config.yaml är korrekt: `cat config/config.yaml | grep access_key`
+3. Testa direkt: `python -c "from src.config.settings import PORCUPINE_ACCESS_KEY; print(PORCUPINE_ACCESS_KEY)"`
 
-### Problem 9: "No module named 'dotenv'"
-
-**Symptom:**
-```
-ModuleNotFoundError: No module named 'dotenv'
-```
-
-**Lösning:**
-```bash
-source genio-env/bin/activate
-pip install python-dotenv
-```
-
-### Problem 10: ALSA errors eller ingen ljud
+### Problem 9: ALSA errors eller ingen ljud
 
 **Symptom:**
 ```
@@ -373,12 +356,7 @@ mosquitto_pub -h localhost -p 8883 -t test -m "hello" -u user -P pass
 
 ### Ändra wake word:
 
-I `.env`:
-```env
-WAKE_WORD=computer
-```
-
-Eller i `config/config.yaml`:
+I `config/config.yaml`:
 ```yaml
 wakeword_detection:
   keyword: "computer"
@@ -413,9 +391,10 @@ password_file /etc/mosquitto/passwd
 
 ### För testning utan TLS (ej rekommenderat):
 
-Använd port 1883 istället:
-```env
-MQTT_PORT=1883
+Använd port 1883 istället i `config/config.yaml`:
+```yaml
+mqtt:
+  port: 1883
 ```
 
 ## Dokumentation

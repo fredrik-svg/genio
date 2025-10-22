@@ -21,14 +21,14 @@ class GenioAI:
         if not PORCUPINE_ACCESS_KEY:
             raise ValueError(
                 "PORCUPINE_ACCESS_KEY is required! "
-                "Add it to config/config.yaml or .env file. "
+                "Add it to config/config.yaml. "
                 "Get free key from: https://console.picovoice.ai/"
             )
         
         # Validate MQTT configuration
         if not MQTT_BROKER or MQTT_BROKER.startswith("mqtt://your") or MQTT_BROKER == "mqtt.example.com":
             self.logger.warning("⚠️  MQTT broker not configured! MQTT features will be disabled.")
-            self.logger.warning("   Configure MQTT_BROKER in config/config.yaml or .env")
+            self.logger.warning("   Configure MQTT_BROKER in config/config.yaml")
             self.mqtt_enabled = False
         else:
             self.mqtt_enabled = True
