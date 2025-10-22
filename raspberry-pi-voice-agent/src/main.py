@@ -10,7 +10,7 @@ from stt.faster_whisper import FasterWhisper
 from tts.tts_engine import PiperTTS
 from utils.logger import Logger
 
-class VoiceAgent:
+class GenioAI:
     def __init__(self):
         self.logger = Logger()
         self.mqtt_client = mqtt.Client()
@@ -41,8 +41,8 @@ class VoiceAgent:
         self.mqtt_client.loop_start()
 
     def on_connect(self, client, userdata, flags, rc):
-        self.logger.info("Connected to MQTT broker")
-        client.subscribe("voice/commands")
+        self.logger.info("Genio AI connected to MQTT broker")
+        client.subscribe("genio/commands")
 
     def on_message(self, client, userdata, msg):
         command = msg.payload.decode()
@@ -60,11 +60,11 @@ class VoiceAgent:
                 self.logger.info("Wake word detected!")
                 audio = self.microphone.listen()
                 command = self.stt.transcribe(audio)
-                self.mqtt_client.publish("voice/commands", command)
+                self.mqtt_client.publish("genio/commands", command)
 
     def run(self):
         self.listen_for_wake_word()
 
 if __name__ == "__main__":
-    agent = VoiceAgent()
+    agent = GenioAI()
     agent.run()

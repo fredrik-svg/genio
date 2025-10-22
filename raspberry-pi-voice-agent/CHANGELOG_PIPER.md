@@ -1,8 +1,23 @@
-# Uppdateringar - Piper TTS Integration
+# Genio AI - Uppdateringar & Piper TTS Integration
+
+## Versionshistorik
+
+### Version 2.0 - Genio AI Rebranding (Oktober 2025)
+- 🎨 **Namnbyte:** Applikationen heter nu officiellt **Genio AI**
+- 📝 Uppdaterat alla filer med nytt namn
+- 🔧 Uppdaterat MQTT-topics till `genio/agent` och `genio/commands`
+- 📊 Uppdaterat loggfil till `logs/genio_ai.log`
+- 🔄 Bytt huvudklass från `VoiceAgent` till `GenioAI`
+
+### Version 1.5 - Piper TTS Integration (Oktober 2025)
+- 🎯 **Implementerat Piper TTS** som primär text-till-tal-motor
+- ⚡ Betydligt förbättrad prestanda och ljudkvalitet
+- 🔌 Offline-kapacitet - ingen internetanslutning krävs
+- 🇸🇪 Stöd för högkvalitativa svenska röster
 
 ## Sammanfattning av ändringar
 
-Applikationen har uppdaterats för att använda **Piper TTS** som text-till-tal-motor istället för den tidigare gTTS-implementationen.
+Genio AI-applikationen har uppdaterats för att använda **Piper TTS** som text-till-tal-motor istället för den tidigare gTTS-implementationen.
 
 ## Ändrade filer
 

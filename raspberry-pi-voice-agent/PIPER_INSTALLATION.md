@@ -1,7 +1,7 @@
-# Piper TTS Installation Guide för Raspberry Pi
+# Genio AI - Piper TTS Installation Guide
 
 ## Översikt
-Denna guide hjälper dig att installera och konfigurera Piper TTS på din Raspberry Pi för svensk talsyntes.
+Denna guide hjälper dig att installera och konfigurera Piper TTS för Genio AI på din Raspberry Pi för svensk talsyntes.
 
 ## Vad är Piper?
 Piper är en snabb, lokal neural text-till-tal-motor som är optimerad för att köra på enheter som Raspberry Pi. Den erbjuder:

@@ -27,14 +27,14 @@ TTS_MODEL = TTS_MODEL_PATH  # Alias for backward compatibility
 # MQTT settings
 MQTT_BROKER = config.get('mqtt', {}).get('broker', 'mqtt.example.com')
 MQTT_PORT = config.get('mqtt', {}).get('port', 1883)
-MQTT_TOPIC = config.get('mqtt', {}).get('topic', 'voice/agent')
-MQTT_CLIENT_ID = config.get('mqtt', {}).get('client_id', 'raspberry_pi_voice_agent')
+MQTT_TOPIC = config.get('mqtt', {}).get('topic', 'genio/agent')
+MQTT_CLIENT_ID = config.get('mqtt', {}).get('client_id', 'genio_ai')
 MQTT_USERNAME = config.get('mqtt', {}).get('username', '')
 MQTT_PASSWORD = config.get('mqtt', {}).get('password', '')
 
 # Logging settings
 LOG_LEVEL = config.get('logging', {}).get('level', 'INFO')
-LOG_FILE = config.get('logging', {}).get('file', 'logs/voice_agent.log')
+LOG_FILE = config.get('logging', {}).get('file', 'logs/genio_ai.log')
 
 # Configuration parameters
 CONFIG_PARAMS = {

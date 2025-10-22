@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """
+Genio AI - Piper TTS Test Script
 Simple test script for Piper TTS functionality.
 Run this to verify that Piper TTS is working correctly.
 """

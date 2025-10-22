@@ -1,7 +1,14 @@
-# Raspberry Pi Voice Agent
+````markdown
+# Genio AI 🤖
+
+> An intelligent voice assistant for Raspberry Pi with Swedish language support
+
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Piper TTS](https://img.shields.io/badge/TTS-Piper-green.svg)](https://github.com/rhasspy/piper)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Overview
-This project implements a voice agent running on a Raspberry Pi 5, designed to interact with an n8n workflow. The application utilizes various technologies for voice recognition and synthesis, including wake word detection, speech-to-text, and text-to-speech functionalities.
+Genio AI is an intelligent voice agent running on a Raspberry Pi 5, designed to interact with an n8n workflow. The application utilizes various technologies for voice recognition and synthesis, including wake word detection, speech-to-text, and text-to-speech functionalities.
 
 ## Features
 - **Wake Word Detection**: Utilizes Porcupine for detecting a specific wake word.
@@ -12,9 +19,9 @@ This project implements a voice agent running on a Raspberry Pi 5, designed to i
 
 ## Project Structure
 ```
-raspberry-pi-voice-agent
+genio-ai
 ├── src
-│   ├── main.py                # Entry point of the application
+│   ├── main.py                # Genio AI entry point
 │   ├── config                 # Configuration settings
 │   │   ├── __init__.py
 │   │   └── settings.py
@@ -38,11 +45,12 @@ raspberry-pi-voice-agent
 │       ├── __init__.py
 │       └── logger.py
 ├── config
-│   └── config.yaml            # Configuration parameters in YAML format
+│   └── config.yaml            # Genio AI configuration parameters
 ├── models
 │   └── .gitkeep               # Keeps the models directory in version control
 ├── requirements.txt           # Project dependencies
-├── .env.example               # Example environment variables
+├── test_piper.py              # Piper TTS test script
+├── PIPER_INSTALLATION.md      # Detailed Piper installation guide
 └── README.md                  # Project documentation
 ```
 
@@ -87,7 +95,14 @@ raspberry-pi-voice-agent
    ```
 
 ## Usage
-Once the application is running, it will listen for the specified wake word. Upon detection, it will process the audio input, convert it to text, and interact with the n8n workflow via MQTT. Responses will be converted to speech and played back through the speaker.
+Once Genio AI is running, it will listen for the specified wake word. Upon detection, it will process the audio input, convert it to text, and interact with the n8n workflow via MQTT. Responses will be converted to speech and played back through the speaker.
+
+### Basic Workflow
+1. Say the wake word (e.g., "Hej")
+2. Genio AI activates and listens
+3. Speak your command
+4. Command is sent to n8n via MQTT
+5. Response is spoken back using Piper TTS
 
 ## Contributing
 Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
