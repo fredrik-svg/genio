@@ -51,6 +51,9 @@ if MQTT_USERNAME in ["YOUR_MQTT_USERNAME", ""] or MQTT_PASSWORD in ["YOUR_MQTT_P
     print("⚠️  VARNING: MQTT credentials är inte konfigurerade!")
     print("   Uppdatera config/config.yaml med username och password")
 
+# Audio settings
+AUDIO_RECORD_SECONDS = config.get('audio', {}).get('record_seconds', 5)
+
 # Logging settings
 LOG_LEVEL = config.get('logging', {}).get('level', 'INFO')
 LOG_FILE = config.get('logging', {}).get('file', 'logs/genio_ai.log')

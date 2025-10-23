@@ -10,6 +10,9 @@ stt:
   model_size: "base"  # Model size: tiny, base, small, medium, large (base recommended for Raspberry Pi)
   language: "sv"  # Swedish language
 
+audio:
+  record_seconds: 5  # Duration to record after wake word detection (in seconds)
+
 tts:
   enabled: true
   engine: "piper"  # Piper TTS engine
