@@ -106,7 +106,9 @@ class GenioAI:
 
     def process_command(self, command):
         # Process the command and respond accordingly
-        response = self.stt.convert(command)
+        self.logger.info(f"Processing command: {command}")
+        # Echo the command back to confirm receipt
+        response = f"Mottaget kommando: {command}"
         self.speaker.speak(response)
 
     def listen_for_wake_word(self):
