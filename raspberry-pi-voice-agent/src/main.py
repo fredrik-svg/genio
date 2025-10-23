@@ -3,7 +3,8 @@ import ssl
 from config.settings import (
     MQTT_BROKER, MQTT_PORT, MQTT_USERNAME, MQTT_PASSWORD, MQTT_USE_TLS,
     PORCUPINE_ACCESS_KEY, WAKE_WORD, WAKE_WORD_MODEL_PATH, WAKE_WORD_SENSITIVITY,
-    STT_MODEL_SIZE, STT_LANGUAGE, TTS_MODEL_PATH, TTS_CONFIG_PATH, TTS_LANGUAGE
+    STT_MODEL_SIZE, STT_LANGUAGE, TTS_MODEL_PATH, TTS_CONFIG_PATH, TTS_LANGUAGE,
+    AUDIO_RECORD_SECONDS
 )
 from audio.microphone import Microphone
 from audio.speaker import Speaker
@@ -34,7 +35,7 @@ class GenioAI:
             self.mqtt_enabled = True
         
         self.mqtt_client = mqtt.Client() if self.mqtt_enabled else None
-        self.microphone = Microphone()
+        self.microphone = Microphone(record_seconds=AUDIO_RECORD_SECONDS)
         
         # Initialize Piper TTS
         self.logger.info("Initializing Piper TTS...")
@@ -112,18 +113,33 @@ class GenioAI:
         self.speaker.speak(response)
 
     def listen_for_wake_word(self):
-        while True:
-            if self.porcupine_detector.detect():
-                self.logger.info("Wake word detected!")
-                audio = self.microphone.listen()
-                command = self.stt.transcribe(audio)
-                
-                if self.mqtt_enabled and self.mqtt_client:
-                    self.mqtt_client.publish("genio/commands", command)
-                else:
-                    self.logger.info(f"Command (no MQTT): {command}")
-                    # Process locally without MQTT
-                    self.speaker.speak(f"Du sa: {command}")
+        try:
+            while True:
+                if self.porcupine_detector.detect():
+                    self.logger.info("Wake word detected!")
+                    try:
+                        audio = self.microphone.listen()
+                        self.logger.info("Transcribing audio...")
+                        command = self.stt.transcribe(audio)
+                        self.logger.info(f"Transcribed command: {command}")
+                        
+                        if self.mqtt_enabled and self.mqtt_client:
+                            self.mqtt_client.publish("genio/commands", command)
+                        else:
+                            self.logger.info(f"Command (no MQTT): {command}")
+                            # Process locally without MQTT
+                            self.speaker.speak(f"Du sa: {command}")
+                    except KeyboardInterrupt:
+                        raise  # Re-raise to be caught by outer handler
+                    except Exception as e:
+                        self.logger.error(f"Error processing command: {e}")
+                        self.speaker.speak("Ursäkta, jag kunde inte förstå det.")
+        except KeyboardInterrupt:
+            self.logger.info("🛑 Genio AI stopped by user")
+            if self.porcupine_detector:
+                self.porcupine_detector.cleanup()
+            if self.microphone:
+                self.microphone.stop()
 
     def run(self):
         self.listen_for_wake_word()
